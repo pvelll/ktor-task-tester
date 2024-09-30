@@ -1,0 +1,4 @@
+FROM gcc:latest
+COPY . /app
+WORKDIR /app
+CMD g++ -o solution solution.cpp && ./solution < input.txt > output.txt
