@@ -12,7 +12,7 @@ class SolutionCheckerManager(private val testRepo: CodeTestRepository) {
 
     init {
         containerIds["C++"] = createContainer("gcc:latest")
-        containerIds["Python"] = createContainer("python:latest")
+//        containerIds["Python"] = createContainer("python:latest")
     }
 
     private fun createContainer(image: String): String {

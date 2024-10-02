@@ -4,6 +4,7 @@ ktor-version = "2.3.12"
 kotlin-version = "2.0.20"
 logback-version = "1.4.14"
 docker-version = "3.2.8"
+koin-version = "3.5.6"
 
 [libraries]
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
@@ -19,6 +20,8 @@ ktor-server-config-yaml = { module = "io.ktor:ktor-server-config-yaml", version.
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor-version" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin-version" }
 docker-java = {module = "com.github.docker-java:docker-java", version.ref = "docker-version"}
+koin-ktor = {module = "io.insert-koin:koin-ktor", version.ref = "koin-version"}
+koin-logger-slf4j = {module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin-version"}
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
