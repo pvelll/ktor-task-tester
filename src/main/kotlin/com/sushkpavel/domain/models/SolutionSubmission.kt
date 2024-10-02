@@ -1,4 +1,4 @@
-package com.sushkpavel.models
+package com.sushkpavel.domain.models
 
 import kotlinx.serialization.Serializable
 
@@ -10,7 +10,6 @@ data class SolutionSubmission(
     val code: String,
     val language : String,
     val input: String,
-    val status: String,
-    val testResults: List<TestResult>
+    val status: String
 )
 

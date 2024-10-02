@@ -6,7 +6,7 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlin.test.*
 
-class ApplicationTest {
+class ApplicationCodeTest {
     @Test
     fun testRoot() = testApplication {
         client.get("/").apply {

@@ -1,4 +1,4 @@
-package com.sushkpavel.plugins
+package com.sushkpavel.application.plugins
 
 import io.ktor.server.application.*
 import io.ktor.server.response.*

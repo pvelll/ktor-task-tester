@@ -1,4 +1,4 @@
-package com.sushkpavel.models
+package com.sushkpavel.domain.models
 
 import kotlinx.serialization.Serializable
 

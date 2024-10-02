@@ -1,4 +1,4 @@
-package com.sushkpavel.plugins
+package com.sushkpavel.application.plugins
 
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*

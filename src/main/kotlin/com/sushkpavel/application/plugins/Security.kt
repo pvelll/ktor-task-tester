@@ -1,4 +1,4 @@
-package com.sushkpavel.plugins
+package com.sushkpavel.application.plugins
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm

@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Укажите нужный порт
+
+  cpp-compiler:
+    build:
+      context: ./docker
+      dockerfile: DockerfileCpp
+    volumes:
+      - /app
+
+  # Добавьте другие компиляторы аналогично
+  # python-compiler:
+  #   image: python:latest
+  #   volumes:
+  #     - /app
