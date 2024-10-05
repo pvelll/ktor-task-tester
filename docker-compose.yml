@@ -1,3 +1,4 @@
+#docker-compose up --build - for launch
 services:
   app:
     build:

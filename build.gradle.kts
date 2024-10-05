@@ -3,19 +3,17 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktor)
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.20"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-    application
 }
 
 group = "com.sushkpavel"
 version = "0.0.1"
 
-tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+tasks.register<Jar>("fatJar") {
     manifest {
-        attributes(
-            "Main-Class" to "com.sushkpavel.application.ApplicationKt"
-        )
+        attributes["Main-Class"] = "io.ktor.server.netty.EngineMain"
     }
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    with(tasks.named<Jar>("jar").get())
 }
 
 application {
