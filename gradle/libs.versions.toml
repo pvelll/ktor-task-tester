@@ -5,6 +5,7 @@ kotlin-version = "2.0.20"
 logback-version = "1.4.14"
 docker-version = "3.2.8"
 koin-version = "3.5.6"
+serialization_version = "1.7.1"
 
 [libraries]
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
@@ -22,6 +23,8 @@ kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version
 docker-java = {module = "com.github.docker-java:docker-java", version.ref = "docker-version"}
 koin-ktor = {module = "io.insert-koin:koin-ktor", version.ref = "koin-version"}
 koin-logger-slf4j = {module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin-version"}
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization_version" }
+
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }

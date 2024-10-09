@@ -12,13 +12,14 @@ import org.koin.ktor.ext.inject
 fun Route.submitRoutes() {
     val solutionService by inject<SolutionService>()
     post("/submit") {
-        try {
+//        try {
             val solution = call.receive<SolutionSubmission>()
+            println(solution)
             val result = solutionService.processSolution(solution)
             call.respond(HttpStatusCode.OK, result)
-
-        } catch (e: Exception) {
-            call.respond(HttpStatusCode.InternalServerError, "Error processing solution submission")
-        }
+//
+//        } catch (e: Exception) {
+//            call.respond(HttpStatusCode.InternalServerError, "Error processing solution submission")
+//        }
     }
 }

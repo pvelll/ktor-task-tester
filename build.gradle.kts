@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.logback.classic)
     implementation(libs.ktor.server.config.yaml)
     implementation(libs.docker.java)
+    implementation(libs.kotlinx.serialization)
     implementation(libs.koin.ktor)
     implementation(libs.koin.logger.slf4j)
     testImplementation(libs.ktor.server.test.host)

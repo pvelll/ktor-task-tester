@@ -9,10 +9,12 @@ services:
 
   cpp-compiler:
     build:
-      context: ./docker
+      context: ./docker/cpp
       dockerfile: DockerfileCpp
     volumes:
       - /app
+    tty: true
+    stdin_open: true
 
   # Добавьте другие компиляторы аналогично
   # python-compiler:
