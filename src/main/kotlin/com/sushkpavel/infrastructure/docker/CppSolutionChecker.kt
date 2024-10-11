@@ -1,7 +1,5 @@
 package com.sushkpavel.infrastructure.docker
 
-import com.github.dockerjava.api.DockerClient
-import com.github.dockerjava.core.command.ExecStartResultCallback
 import com.sushkpavel.domain.models.SolutionSubmission
 import com.sushkpavel.domain.models.TestResult
 import com.sushkpavel.domain.repositories.CodeTestRepository
@@ -40,21 +38,30 @@ class CppSolutionChecker(
         )
     }
     private fun saveCodeToFile(code: String) {
-        val file = File("solution.cpp")
+        val file = File("docker/cpp/solution.cpp")
         file.writeText(code)
     }
+//    ktor-leetcode-cpp-compiler
+private fun executeTests(inputData: List<String>): List<String> {
+    val results = mutableListOf<String>()
+    val workingDir = File("docker/cpp").absolutePath
 
-    private fun executeTests(inputData: List<String>): List<String> {
-        val results = mutableListOf<String>()
+    inputData.forEach { input ->
+        println("input : $input")
+        val process = Runtime.getRuntime().exec(
+            arrayOf("docker", "run", "--rm", "-v", "$workingDir:/usr/src/app", "ktor-leetcode-cpp-compiler", "./run.sh", input)
+        )
+        val output = process.inputStream.bufferedReader().readText().trim()
+        val errorOutput = process.errorStream.bufferedReader().readText().trim()
 
-        inputData.forEach { input ->
-            val process = Runtime.getRuntime().exec(
-                arrayOf("docker", "run", "--rm", "-v", "$(pwd)/solution:/usr/src/app", "cpp-compiler", input)
-            )
-            val output = process.inputStream.bufferedReader().readText().trim()
-            results.add(output)
+        if (errorOutput.isNotEmpty()) {
+            println("error : $errorOutput")
         }
 
-        return results
+        println("output : $output")
+        results.add(output)
     }
+
+    return results
+}
 }
