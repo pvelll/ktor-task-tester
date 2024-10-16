@@ -1,4 +1,5 @@
 #docker-compose up --build - for launch
+version: '3.8'
 services:
   app:
     build:
@@ -6,15 +7,39 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8082:8082"
+    networks:
+      - app-network
+    volumes:
+      - shared-data:/app/shared
 
   cpp-compiler:
     build:
       context: ./docker/cpp
       dockerfile: DockerfileCpp
+    ports:
+      - "8083:8083"
+    networks:
+      - app-network
     volumes:
-      - /app
-    tty: true
-    stdin_open: true
+      - shared-data:/app/shared
+
+  cpp-tester:
+    build:
+      context: ./docker/cpp-tester
+      dockerfile: DockerfileTesterCpp
+    ports:
+      - "8084:8084"
+    networks:
+      - app-network
+    volumes:
+      - shared-data:/app/shared
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  shared-data:
 
   # Добавьте другие компиляторы аналогично
   # python-compiler:

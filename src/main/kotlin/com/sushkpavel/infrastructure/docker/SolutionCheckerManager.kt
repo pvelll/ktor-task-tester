@@ -5,6 +5,9 @@ import com.github.dockerjava.core.DockerClientBuilder
 import com.github.dockerjava.jaxrs.JerseyDockerHttpClient
 import com.sushkpavel.domain.repositories.CodeTestRepository
 import com.sushkpavel.domain.services.SolutionChecker
+import io.ktor.client.*
+import kotlinx.serialization.json.Json
+import org.koin.java.KoinJavaComponent.inject
 import java.net.URI
 import java.util.concurrent.ConcurrentHashMap
 
