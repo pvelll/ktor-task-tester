@@ -1,5 +1,7 @@
 package com.sushkpavel.models
 
+import kotlinx.serialization.Serializable
+
 @Serializable
 data class SolutionSubmission(
     val id: String,

@@ -3,3 +3,4 @@ plugins {
 }
 rootProject.name = "com.sushkpavel.ktor-leetcode"
 include("compile-service")
+include("check-colution-service")
