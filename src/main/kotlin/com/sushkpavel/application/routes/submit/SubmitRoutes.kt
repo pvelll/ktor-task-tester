@@ -2,6 +2,7 @@ package com.sushkpavel.application.routes.submit
 
 import com.sushkpavel.application.services.SolutionService
 import com.sushkpavel.domain.models.SolutionSubmission
+import com.sushkpavel.domain.models.TestResult
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -22,4 +23,12 @@ fun Route.submitRoutes() {
 //            call.respond(HttpStatusCode.InternalServerError, "Error processing solution submission")
 //        }
     }
+}
+
+suspend fun sendSolutionToCompileService(solution: SolutionSubmission): TestResult {
+    val channel = ManagedChannelBuilder.forAddress("compile-service", 8083)
+        .usePlaintext()
+        .build()
+    val stub = CompileServiceGrpc.newBlockingStub(channel)
+    return stub.compileSolution(solution)
 }
