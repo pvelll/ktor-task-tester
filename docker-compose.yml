@@ -12,12 +12,35 @@ services:
     volumes:
       - shared-data:/app/shared
 
+  compile-service:
+    build:
+      context: ./compile-service
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    networks:
+      - app-network
+    volumes:
+      - shared-data:/app/shared
+
+
+  check-solution-service:
+    build:
+      context: ./check-solution-service
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8084"
+    networks:
+      - app-network
+    volumes:
+      - shared-data:/app/shared
+
   cpp-compiler:
     build:
       context: ./docker/cpp
       dockerfile: DockerfileCpp
     ports:
-      - "8083:8083"
+      - "8085:8085"
     networks:
       - app-network
     volumes:
@@ -28,7 +51,7 @@ services:
       context: ./docker/cpp-tester
       dockerfile: DockerfileTesterCpp
     ports:
-      - "8084:8084"
+      - "8086:8086"
     networks:
       - app-network
     volumes:

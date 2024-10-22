@@ -18,22 +18,19 @@ repositories {
 dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.kotlinx.serialization)
+    implementation(libs.ktor.server.config.yaml)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
     implementation(libs.logback.classic)
 }
+
 application {
-    mainClass.set("com.sushkpavel.ApplicationKt")
+    mainClass.set("io.ktor.server.netty.EngineMain")
+
+    val isDevelopment: Boolean = project.ext.has("development")
+    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
-
-tasks.withType<Jar> {
-    manifest {
-        attributes["Main-Class"] = "com.sushkpavel.ApplicationKt"
-    }
-    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
 
 dependencies {
     testImplementation(kotlin("test"))

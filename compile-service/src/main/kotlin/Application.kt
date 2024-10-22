@@ -13,18 +13,18 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-fun main() {
-    embeddedServer(Netty, port = 8083) {
-        routing {
-            post("/compile") {
-                val solution = call.receive<SolutionSubmission>()
-                val result = compileAndRun(solution)
-                call.respond(result)
-            }
-        }
-    }.start(wait = true)
+fun main(args : Array<String>) {
+       EngineMain.main(args)
 }
-
+fun Application.module(){
+    routing {
+        post("/compile") {
+            val solution = call.receive<SolutionSubmission>()
+            val result = compileAndRun(solution)
+            call.respond(result)
+        }
+    }
+}
 suspend fun compileAndRun(solution: SolutionSubmission): TestResult {
     when(solution.language){
         "C++" -> return compileCpp(solution)
