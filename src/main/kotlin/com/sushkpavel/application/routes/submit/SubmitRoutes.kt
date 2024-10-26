@@ -24,11 +24,11 @@ fun Route.submitRoutes() {
 //        }
     }
 }
-
-suspend fun sendSolutionToCompileService(solution: SolutionSubmission): TestResult {
-    val channel = ManagedChannelBuilder.forAddress("compile-service", 8083)
-        .usePlaintext()
-        .build()
-    val stub = CompileServiceGrpc.newBlockingStub(channel)
-    return stub.compileSolution(solution)
-}
+//
+//suspend fun sendSolutionToCompileService(solution: SolutionSubmission): TestResult {
+//    val channel = ManagedChannelBuilder.forAddress("compile-service", 8083)
+//        .usePlaintext()
+//        .build()
+//    val stub = CompileServiceGrpc.newBlockingStub(channel)
+//    return stub.compileSolution(solution)
+//}

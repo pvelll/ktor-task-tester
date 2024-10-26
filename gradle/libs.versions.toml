@@ -5,7 +5,7 @@ logback-version = "1.4.14"
 docker-version = "3.4.0"
 koin-version = "3.5.6"
 serialization_version = "1.7.1"
-grpc-version = "1.42.1"
+grpc-version = "1.68.0"
 
 [libraries]
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
@@ -27,6 +27,9 @@ kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-
 grpc-netty-shaded = { module = "io.grpc:grpc-netty-shaded", version.ref = "grpc-version" }
 grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpc-version" }
 grpc-stub = { module = "io.grpc:grpc-stub", version.ref = "grpc-version" }
+grpc-kotlin-stub = { module = "io.grpc:grpc-kotlin-stub", version = "1.4.1" }
+protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version = "4.28.3" }
+protobuf-java = { module = "com.google.protobuf:protobuf-java", version = "3.21.1" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
