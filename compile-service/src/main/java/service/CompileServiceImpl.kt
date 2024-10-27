@@ -1,35 +1,44 @@
 package com.sushkpavel.service
 
 import com.sushkpavel.CompileServiceGrpc
-import com.sushkpavel.CompileServiceOuterClass
 import com.sushkpavel.models.SolutionSubmission
 import com.sushkpavel.models.TestResult
+import io.grpc.stub.StreamObserver
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.concurrent.TimeUnit
 
 
-class CompileServiceImpl : CompileServiceGrpc.CompileServiceImplBase(){
-    suspend fun compileSolution(request: com.sushkpavel.SolutionSubmission): com.sushkpavel.TestResult {
+class CompileServiceImpl : CompileServiceGrpc.CompileServiceImplBase() {
+
+    override fun compileSolution(
+        request: com.sushkpavel.SolutionSubmission?,
+        responseObserver: StreamObserver<com.sushkpavel.TestResult>?
+    ) {
+        println("got request : ${request?.id} ")
         val solution = SolutionSubmission(
-            id = request.id,
-            userId = request.userId,
-            taskId = request.taskId,
-            code = request.code,
-            language = request.language,
-            input = request.input,
-            status = request.status
+            id = request?.id ?: "",
+            userId = request?.userId ?: "",
+            taskId = request?.taskId ?: "",
+            code = request?.code ?: "",
+            language = request?.language ?: "",
+            input = request?.input ?: "",
+            status = request?.status ?: ""
         )
-        val result = compileAndRun(solution)
-        return com.sushkpavel.TestResult.newBuilder()
-            .setId(result.id)
-            .setUserId(result.userId)
-            .setSolutionId(result.solutionId)
-            .setTestId(result.testId)
-            .setActualResult(result.actualResult)
-            .setSuccess(result.success)
-            .build()
+        val result = runBlocking { compileAndRun(solution) }
+        responseObserver?.onNext(
+            com.sushkpavel.TestResult.newBuilder()
+                .setId(result.id)
+                .setUserId(result.userId)
+                .setSolutionId(result.solutionId)
+                .setTestId(result.testId)
+                .setActualResult(result.actualResult)
+                .setSuccess(result.success)
+                .build()
+        )
+        responseObserver?.onCompleted()
     }
 
     private suspend fun compileAndRun(solution: SolutionSubmission): TestResult {

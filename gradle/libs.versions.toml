@@ -30,6 +30,7 @@ grpc-stub = { module = "io.grpc:grpc-stub", version.ref = "grpc-version" }
 grpc-kotlin-stub = { module = "io.grpc:grpc-kotlin-stub", version = "1.4.1" }
 protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version = "4.28.3" }
 protobuf-java = { module = "com.google.protobuf:protobuf-java", version = "3.21.1" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.9.0" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }

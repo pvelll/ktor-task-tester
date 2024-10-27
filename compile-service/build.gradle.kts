@@ -17,18 +17,14 @@ repositories {
 
 
 dependencies {
-    implementation(libs.ktor.serialization.kotlinx.json)
-    implementation(libs.ktor.server.config.yaml)
+    implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.serialization)
-    implementation(libs.ktor.server.core)
-    implementation(libs.ktor.server.netty)
     implementation(libs.logback.classic)
     implementation(libs.grpc.netty.shaded)
     implementation(libs.grpc.stub)
     implementation(libs.grpc.protobuf)
     implementation(libs.protobuf.kotlin)
     implementation(libs.grpc.kotlin.stub)
-    testImplementation(libs.ktor.server.test.host)
 }
 
 
@@ -54,13 +50,13 @@ protobuf {
     }
 }
 
-
 application {
-    mainClass.set("io.ktor.server.netty.EngineMain")
+    mainClass.set("Service")
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
+
 
 dependencies {
     testImplementation(kotlin("test"))
