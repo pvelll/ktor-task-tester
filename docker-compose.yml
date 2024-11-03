@@ -1,8 +1,8 @@
 version: '3.8'
 services:
-  app:
+  api-service:
     build:
-      context: .
+      context: ./api
       dockerfile: Dockerfile
     ports:
       - "8082:8082"
@@ -12,9 +12,9 @@ services:
     volumes:
       - shared-data:/app/shared
 
-  compile-service:
+  compiler-service:
     build:
-      context: ./compile-service
+      context: ./compiler
     ports:
       - "8083:8083"
     networks:
@@ -23,9 +23,9 @@ services:
     volumes:
       - shared-data:/app/shared
 
-  check-solution-service:
+  checker-service:
     build:
-      context: ./check-solution-service
+      context: ./checker
     ports:
       - "8084:8084"
     networks:
