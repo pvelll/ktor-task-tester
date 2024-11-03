@@ -18,6 +18,9 @@ fun Application.configureKoin() {
 //            single {
 //                SolutionCheckerManager(get())
 //            }
+            single{
+                CompileClient()
+            }
             factory<CodeTestRepository> {
                 CodeTestRepositoryImpl()
             }

@@ -9,16 +9,14 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.koin.java.KoinJavaComponent.inject
 
 
 fun Route.submitRoutes() {
     post("/submit") {
         val solution = call.receive<com.sushkpavel.domain.models.SolutionSubmission>()
-        val channel = ManagedChannelBuilder.forAddress("compile-service", 8083)
-            .usePlaintext()
-            .build()
 
-        val client = CompileClient(channel)
+        val client by inject<CompileClient>(CompileClient::class.java)
 
         val solutionGrpc = SolutionSubmission.newBuilder()
             .setId(solution.id)
@@ -36,7 +34,6 @@ fun Route.submitRoutes() {
             HttpStatusCode.OK,
             TestResult(result.id, result.userId, result.solutionId, result.testId, result.actualResult, result.success)
         )
-        channel.shutdown()
     }
 }
 //

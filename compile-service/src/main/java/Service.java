@@ -7,7 +7,11 @@ import java.io.IOException;
 
 public class Service {
     public static void main(String[] args) throws InterruptedException, IOException {
-        Server server = ServerBuilder.forPort(8083).addService(new CompileServiceImpl()).build().start();
+        Server server = ServerBuilder.forPort(8083)
+                .addService(new CompileServiceImpl())
+                .build();
+        server.start();
+        System.out.println("GRPC Server started");
         server.awaitTermination();
     }
 }
