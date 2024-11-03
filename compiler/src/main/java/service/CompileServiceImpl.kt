@@ -27,17 +27,27 @@ class CompileServiceImpl : CompileServiceGrpc.CompileServiceImplBase() {
             input = request?.input ?: "",
             status = request?.status ?: ""
         )
-        val result = runBlocking { compileAndRun(solution) }
         responseObserver?.onNext(
             com.sushkpavel.TestResult.newBuilder()
-                .setId(result.id)
-                .setUserId(result.userId)
-                .setSolutionId(result.solutionId)
-                .setTestId(result.testId)
-                .setActualResult(result.actualResult)
-                .setSuccess(result.success)
+                .setId("tesstId")
+                .setUserId("tesstId")
+                .setSolutionId("tesstId")
+                .setTestId("tesstId")
+                .setActualResult("result.actualResult")
+                .setSuccess(true)
                 .build()
         )
+//        val result = runBlocking { compileAndRun(solution) }
+//        responseObserver?.onNext(
+//            com.sushkpavel.TestResult.newBuilder()
+//                .setId(result.id)
+//                .setUserId(result.userId)
+//                .setSolutionId(result.solutionId)
+//                .setTestId(result.testId)
+//                .setActualResult(result.actualResult)
+//                .setSuccess(result.success)
+//                .build()
+//        )
         responseObserver?.onCompleted()
     }
 

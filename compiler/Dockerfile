@@ -1,20 +1,4 @@
-FROM openjdk:19-jdk-slim
-
-RUN apt-get update && apt-get install -y \
-    g++ \
-    gcc \
-    make \
-    python3 \
-    python3-pip \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /app
-
+FROM openjdk:19
 ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} compile-service-0.0.1.jar
-
-ENTRYPOINT ["java", "-jar", "/app/compile-service-0.0.1.jar"]
-
-
-
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java", "--add-opens", "java.base/jdk.internal.misc=ALL-UNNAMED", "--add-opens", "java.base/java.lang=ALL-UNNAMED", "-jar", "/app.jar"]

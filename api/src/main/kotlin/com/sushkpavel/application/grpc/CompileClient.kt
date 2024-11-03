@@ -5,8 +5,14 @@ import com.sushkpavel.SolutionSubmission
 import com.sushkpavel.TestResult
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
+import io.grpc.internal.DnsNameResolverProvider
 
 class CompileClient {
+    private val channel: ManagedChannel = ManagedChannelBuilder.forAddress("compiler-service", 8083)
+        .nameResolverFactory(DnsNameResolverProvider())
+        .usePlaintext()
+        .build()
+
     private val stub: CompileServiceGrpc.CompileServiceBlockingStub = CompileServiceGrpc.newBlockingStub(channel)
 
     fun compileSolution(solution: SolutionSubmission): TestResult {
@@ -15,8 +21,7 @@ class CompileClient {
         return result
     }
 
-    companion object {
-        val channel = ManagedChannelBuilder.forTarget("localhost:8083").build()
+    fun shutdown() {
+        channel.shutdown()
     }
 }
-
