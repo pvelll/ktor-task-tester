@@ -69,8 +69,8 @@ dependencies {
     implementation(libs.grpc.netty.shaded)
     implementation(libs.grpc.stub)
     implementation(libs.grpc.protobuf)
-    implementation(libs.protobuf.kotlin)
-    implementation(libs.grpc.kotlin.stub)
+    implementation(libs.protobuf.java)
+    implementation(libs.javax.annotations)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 }

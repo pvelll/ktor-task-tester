@@ -15,9 +15,7 @@ import org.koin.java.KoinJavaComponent.inject
 fun Route.submitRoutes() {
     post("/submit") {
         val solution = call.receive<com.sushkpavel.domain.models.SolutionSubmission>()
-
-        val client by inject<CompileClient>(CompileClient::class.java)
-
+        val client = CompileClient()
         val solutionGrpc = SolutionSubmission.newBuilder()
             .setId(solution.id)
             .setUserId(solution.userId)

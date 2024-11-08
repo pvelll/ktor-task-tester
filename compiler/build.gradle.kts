@@ -2,7 +2,6 @@ import com.google.protobuf.gradle.id
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.ktor)
     id("com.google.protobuf") version "0.9.4"
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.20"
 }
@@ -23,8 +22,8 @@ dependencies {
     implementation(libs.grpc.netty.shaded)
     implementation(libs.grpc.stub)
     implementation(libs.grpc.protobuf)
-    implementation(libs.protobuf.kotlin)
-    implementation(libs.grpc.kotlin.stub)
+    implementation(libs.protobuf.java)
+    implementation(libs.javax.annotations)
 }
 
 
@@ -50,12 +49,6 @@ protobuf {
     }
 }
 
-application {
-    mainClass.set("Service")
-
-    val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
-}
 
 
 dependencies {
