@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     id("com.google.protobuf") version "0.9.4"
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.20"
+    application
 }
 
 group = "com.sushkpavel"
@@ -26,6 +27,17 @@ dependencies {
     implementation(libs.javax.annotations)
 }
 
+application{
+    mainClass.set("com.sushkpavel.Service")
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes(
+            "Main-Class" to "com.sushkpavel.Service"
+        )
+    }
+}
 
 protobuf {
     protoc {

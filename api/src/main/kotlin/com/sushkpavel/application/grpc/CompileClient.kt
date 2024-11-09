@@ -18,12 +18,20 @@ class CompileClient {
         channel.shutdown()
     }
 
-    companion object{
-        private val channel: ManagedChannel = ManagedChannelBuilder.forAddress("compiler-service", 8083)
-            .usePlaintext()
-            .build()
 
-        private val stub: CompileServiceGrpc.CompileServiceBlockingStub = CompileServiceGrpc.newBlockingStub(channel)
+    companion object {
+        private val channel: ManagedChannel = try {
+            ManagedChannelBuilder.forAddress("compiler-service", 8083)
+                .usePlaintext()
+                .build()
+        } catch (e: Exception) {
+            throw RuntimeException("Failed to initialize channel", e)
+        }
 
+        private val stub: CompileServiceGrpc.CompileServiceBlockingStub = try {
+            CompileServiceGrpc.newBlockingStub(channel)
+        } catch (e: Exception) {
+            throw RuntimeException("Failed to initialize stub", e)
+        }
     }
 }

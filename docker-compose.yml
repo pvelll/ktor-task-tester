@@ -15,6 +15,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    networks:
+      - app-network
 
   compiler-service:
     build:
@@ -23,6 +25,8 @@ services:
       - "8083:8083"
     volumes:
       - shared-data:/app/shared
+    networks:
+      - app-network
 
   checker-service:
     build:
@@ -69,6 +73,7 @@ services:
 networks:
   app-network:
     driver: bridge
+
 
 volumes:
   shared-data:

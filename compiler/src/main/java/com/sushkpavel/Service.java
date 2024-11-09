@@ -1,8 +1,8 @@
+package com.sushkpavel;
+
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import com.sushkpavel.service.CompileServiceImpl;
-import kotlin.coroutines.CoroutineContextImplKt;
-
 import java.io.IOException;
 
 public class Service {

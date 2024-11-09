@@ -25,7 +25,7 @@ docker-java = { module = "com.github.docker-java:docker-java", version.ref = "do
 koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin-version" }
 koin-logger-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin-version" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization-version" }
-grpc-netty-shaded = { module = "io.grpc:grpc-netty", version.ref = "grpc-version" }
+grpc-netty-shaded = { module = "io.grpc:grpc-netty-shaded", version.ref = "grpc-version" }
 grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpc-version" }
 grpc-stub = { module = "io.grpc:grpc-stub", version.ref = "grpc-version" }
 protobuf-java = { module = "com.google.protobuf:protobuf-java", version = "4.28.3" }
