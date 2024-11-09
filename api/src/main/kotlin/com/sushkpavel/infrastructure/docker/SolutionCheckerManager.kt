@@ -1,8 +1,5 @@
 package com.sushkpavel.infrastructure.docker
 
-import com.github.dockerjava.api.DockerClient
-import com.github.dockerjava.core.DockerClientBuilder
-import com.github.dockerjava.jaxrs.JerseyDockerHttpClient
 import com.sushkpavel.domain.repositories.CodeTestRepository
 import com.sushkpavel.domain.services.SolutionChecker
 import io.ktor.client.*

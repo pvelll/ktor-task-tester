@@ -1,32 +1,19 @@
 package com.sushkpavel.application.routes.submit
 
-import com.sushkpavel.SolutionSubmission
-import com.sushkpavel.application.grpc.CompileClient
+import com.sushkpavel.application.client.CompileClient
 import com.sushkpavel.domain.models.TestResult
-import io.grpc.ManagedChannelBuilder
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.koin.java.KoinJavaComponent.inject
 
 
 fun Route.submitRoutes() {
     post("/submit") {
         val solution = call.receive<com.sushkpavel.domain.models.SolutionSubmission>()
         val client = CompileClient()
-        val solutionGrpc = SolutionSubmission.newBuilder()
-            .setId(solution.id)
-            .setUserId(solution.userId)
-            .setTaskId(solution.taskId)
-            .setCode(solution.code)
-            .setLanguage(solution.language)
-            .setInput(solution.input)
-            .setStatus(solution.status)
-            .build()
-
-        val result = client.compileSolution(solutionGrpc)
+        val result = client.compileSolution(solution)
         println("Compilation result: ${result.actualResult}, Success: ${result.success}")
         call.respond(
             HttpStatusCode.OK,

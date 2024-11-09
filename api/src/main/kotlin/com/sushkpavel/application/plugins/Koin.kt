@@ -1,6 +1,5 @@
 package com.sushkpavel.application.plugins
 
-import com.sushkpavel.application.grpc.CompileClient
 import com.sushkpavel.domain.repositories.CodeTestRepository
 import com.sushkpavel.infrastructure.persistance.CodeTestRepositoryImpl
 import io.ktor.server.application.*
