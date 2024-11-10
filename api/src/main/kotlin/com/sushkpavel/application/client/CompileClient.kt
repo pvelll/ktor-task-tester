@@ -16,7 +16,7 @@ import kotlinx.coroutines.runBlocking
 
 class CompileClient {
 
-    val client = HttpClient(CIO) {
+    private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
             json()
         }

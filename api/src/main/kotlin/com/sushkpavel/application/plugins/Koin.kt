@@ -1,7 +1,5 @@
 package com.sushkpavel.application.plugins
 
-import com.sushkpavel.domain.repositories.CodeTestRepository
-import com.sushkpavel.infrastructure.persistance.CodeTestRepositoryImpl
 import io.ktor.server.application.*
 import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
@@ -17,9 +15,6 @@ fun Application.configureKoin() {
 //            single {
 //                SolutionCheckerManager(get())
 //            }
-            factory<CodeTestRepository> {
-                CodeTestRepositoryImpl()
-            }
         })
     }
 }

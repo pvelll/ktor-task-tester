@@ -1,7 +1,7 @@
-package com.sushkpavel.infrastructure.persistance
+package com.sushkpavel.data.repo
 
-import com.sushkpavel.domain.models.CodeTest
-import com.sushkpavel.domain.repositories.CodeTestRepository
+import com.sushkpavel.domain.model.CodeTest
+import com.sushkpavel.domain.repo.CodeTestRepository
 
 class CodeTestRepositoryImpl : CodeTestRepository {
     override suspend fun getTestByTaskId(id: String): CodeTest? {
