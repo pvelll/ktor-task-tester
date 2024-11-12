@@ -18,9 +18,9 @@ services:
     networks:
       - app-network
 
-  compiler-service:
+  submission-service:
     build:
-      context: ./compiler
+      context: ./submission
     ports:
       - "8083:8083"
     volumes:
