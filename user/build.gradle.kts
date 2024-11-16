@@ -13,6 +13,7 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.kotlinx.datetime)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.auth)
     implementation(libs.ktor.server.auth.jwt)
@@ -22,6 +23,7 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.java.time)
     implementation(libs.mysql.connector.java)
     implementation(libs.ktor.server.netty)
     implementation(libs.logback.classic)

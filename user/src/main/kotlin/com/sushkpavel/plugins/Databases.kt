@@ -1,26 +1,21 @@
 package com.sushkpavel.plugins
 
-import com.sushkpavel.ExposedUser
-import com.sushkpavel.UserService
+import com.sushkpavel.domain.model.User
+import com.sushkpavel.domain.service.UserService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.jetbrains.exposed.sql.*
+import org.koin.ktor.ext.inject
 
 fun Application.configureDatabases() {
-    val database = Database.connect(
-        url = "jdbc:mysql://localhost:3306/ktor_task_tester",
-        user = "root",
-        driver = "om.mysql.cj.jdbc.Driver",
-        password = "3277122228",
-    )
-    val userService = UserService(database)
+
+    val userService by inject<UserService>()
     routing {
         // Create user
         post("/users") {
-            val user = call.receive<ExposedUser>()
+            val user = call.receive<User>()
             val id = userService.create(user)
             call.respond(HttpStatusCode.Created, id)
         }
@@ -39,7 +34,7 @@ fun Application.configureDatabases() {
         // Update user
         put("/users/{id}") {
             val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
-            val user = call.receive<ExposedUser>()
+            val user = call.receive<User>()
             userService.update(id, user)
             call.respond(HttpStatusCode.OK)
         }
