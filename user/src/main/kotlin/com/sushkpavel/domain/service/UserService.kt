@@ -14,19 +14,4 @@ interface UserService {
     suspend fun update(id: Int, user: User)
     suspend fun delete(id: Int)
 
-    private suspend fun <T> dbQuery(block: suspend () -> T)
-    object Users : Table() {
-        val userId = integer("user_id").autoIncrement()
-        val username = varchar("username", length = 255)
-        val email = varchar("email", length = 255)
-        val passwordHash = varchar("password_hash", length = 255)
-        val createdAt = timestamp("created_at" ).default(Instant.now())
-        val updatedAt = timestamp("updated_at").default(Instant.now())
-
-        override val primaryKey = PrimaryKey(userId)
-        init {
-            uniqueIndex(username)
-            uniqueIndex(email)
-        }
-    }
 }

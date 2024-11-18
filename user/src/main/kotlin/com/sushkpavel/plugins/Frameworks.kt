@@ -1,6 +1,8 @@
 package com.sushkpavel.plugins
 
+import com.sushkpavel.domain.repository.UserRepository
 import com.sushkpavel.domain.service.UserService
+import com.sushkpavel.infrastructure.repository.UserRepositoryImpl
 import com.sushkpavel.infrastructure.service.UserServiceImpl
 import io.ktor.server.application.*
 import org.jetbrains.exposed.sql.Database
@@ -17,11 +19,14 @@ fun Application.configureFrameworks() {
             }
             factory<Database> {
                 Database.connect(
-                    url = "jdbc:mysql://0.0.0.0:3306/ktor_task_tester",
+                    url = "jdbc:mysql://127.0.0.1:3306/ktor_task_tester",
                     user = "root",
-                    driver = "om.mysql.cj.jdbc.Driver",
+                    driver = "com.mysql.cj.jdbc.Driver",
                     password = "3277122228",
                 )
+            }
+            factory<UserRepository> {
+                UserRepositoryImpl(get())
             }
         })
     }

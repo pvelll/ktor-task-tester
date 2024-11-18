@@ -8,6 +8,23 @@ plugins {
 group = "com.sushkpavel"
 version = "1.0.0"
 
+tasks.register<Jar>("fatJar") {
+    manifest {
+        attributes["Main-Class"] = "io.ktor.server.netty.EngineMain"
+    }
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    with(tasks.named<Jar>("jar").get())
+}
+
+application {
+    mainClass.set("io.ktor.server.netty.EngineMain")
+
+    val isDevelopment: Boolean = project.ext.has("development")
+    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+}
+
+
+
 repositories {
     mavenCentral()
 }

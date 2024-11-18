@@ -8,8 +8,6 @@ services:
       - "8082:8082"
     volumes:
       - shared-data:/app/shared
-    depends_on:
-      - compiler-service
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
       interval: 30s
@@ -38,37 +36,50 @@ services:
     volumes:
       - shared-data:/app/shared
 
-  cpp-compiler:
+
+  user-service:
     build:
-      context: ./docker/cpp
-      dockerfile: DockerfileCpp
+      context: ./submission
     ports:
       - "8085:8085"
-    networks:
-      - app-network
     volumes:
       - shared-data:/app/shared
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8085/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    networks:
+      - app-network
 
-  cpp-tester:
-    build:
-      context: ./docker/cpp-tester
-      dockerfile: DockerfileTesterCpp
-    ports:
-      - "8086:8086"
-    networks:
-      - app-network
-    volumes:
-      - shared-data:/app/shared
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+#  cpp-compiler:
+#    build:
+#      context: ./docker/cpp
+#      dockerfile: DockerfileCpp
+#    ports:
+#      - "8085:8085"
+#    networks:
+#      - app-network
+#    volumes:
+#      - shared-data:/app/shared
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:8085/health"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
+
+
+#
+#  cpp-tester:
+#    build:
+#      context: ./docker/cpp-tester
+#      dockerfile: DockerfileTesterCpp
+#    ports:
+#      - "8086:8086"
+#    networks:
+#      - app-network
+#    volumes:
+#      - shared-data:/app/shared
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
 
 networks:
   app-network:
