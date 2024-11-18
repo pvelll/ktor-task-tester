@@ -1,4 +1,4 @@
-package com.sushkpavel.plugins
+package com.sushkpavel.di
 
 import com.sushkpavel.domain.repository.UserRepository
 import com.sushkpavel.domain.service.UserService
@@ -10,7 +10,8 @@ import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 
-fun Application.configureFrameworks() {
+
+fun Application.configureKoin() {
     install(Koin) {
         slf4jLogger()
         modules(module {

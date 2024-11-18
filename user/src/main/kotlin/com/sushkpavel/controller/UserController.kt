@@ -1,4 +1,4 @@
-package com.sushkpavel.plugins
+package com.sushkpavel.controller
 
 import com.sushkpavel.domain.model.User
 import com.sushkpavel.domain.service.UserService
@@ -9,7 +9,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
-fun Application.configureDatabases() {
+fun Application.configureController() {
 
     val userService by inject<UserService>()
     routing {
