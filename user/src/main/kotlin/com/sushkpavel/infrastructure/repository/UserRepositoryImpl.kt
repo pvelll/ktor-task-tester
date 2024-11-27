@@ -60,6 +60,10 @@ class UserRepositoryImpl(private val database: Database) : UserRepository {
         }
     }
 
+    override suspend fun login(email: String, password: String): User? {
+        TODO("Not yet implemented")
+    }
+
     private suspend fun <T> dbQuery(block: suspend () -> T): T =
         newSuspendedTransaction(Dispatchers.IO) { block() }
 }
