@@ -10,7 +10,7 @@ interface UserRepository {
     suspend fun read(id: Int): User?
     suspend fun update(id: Int, user: User)
     suspend fun delete(id: Int)
-    suspend fun login(email: String, password: String): User?
+    suspend fun getUserByEmail(email: String) : User?
 
 
     object Users : Table() {

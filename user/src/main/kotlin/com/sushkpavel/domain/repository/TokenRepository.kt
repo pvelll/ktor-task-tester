@@ -1,6 +1,7 @@
 package com.sushkpavel.domain.repository
 
 import com.sushkpavel.domain.model.Token
+import com.sushkpavel.domain.model.User
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.timestamp
@@ -13,7 +14,7 @@ interface TokenRepository {
     suspend fun getTokenById(tokenId: Int): Token?
     suspend fun getTokenByValue(token: String): Token?
     suspend fun deleteToken(tokenId: Int): Boolean
-    suspend fun generateToken(userId: Int): Token
+    suspend fun generateToken(user: User): Token
 
 
     object Tokens : Table() {

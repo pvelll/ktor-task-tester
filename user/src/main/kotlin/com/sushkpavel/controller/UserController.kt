@@ -10,20 +10,20 @@ import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
 fun Application.configureController() {
-
+    val INVALID_ID = "Invalid ID"
     val userService by inject<UserService>()
     routing {
         // Create user
         post("/users") {
             val user = call.receive<User>()
-            val id = userService.create(user)
+            val id = userService.register(user)
             call.respond(HttpStatusCode.Created, id)
         }
 
         // Read user
         get("/users/{id}") {
-            val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
-            val user = userService.read(id)
+            val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException(INVALID_ID)
+            val user = userService.getById(id)
             if (user != null) {
                 call.respond(HttpStatusCode.OK, user)
             } else {
@@ -33,7 +33,7 @@ fun Application.configureController() {
 
         // Update user
         put("/users/{id}") {
-            val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
+            val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException(INVALID_ID)
             val user = call.receive<User>()
             userService.update(id, user)
             call.respond(HttpStatusCode.OK)
@@ -41,9 +41,10 @@ fun Application.configureController() {
 
         // Delete user
         delete("/users/{id}") {
-            val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
+            val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException(INVALID_ID)
             userService.delete(id)
             call.respond(HttpStatusCode.OK)
         }
     }
+
 }

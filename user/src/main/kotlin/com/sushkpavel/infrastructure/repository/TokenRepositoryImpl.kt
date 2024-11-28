@@ -1,6 +1,8 @@
 package com.sushkpavel.infrastructure.repository
 
+import com.auth0.jwt.JWT
 import com.sushkpavel.domain.model.Token
+import com.sushkpavel.domain.model.User
 import com.sushkpavel.domain.repository.TokenRepository
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -45,11 +47,14 @@ class TokenRepositoryImpl(private val database: Database) : TokenRepository {
         Tokens.deleteWhere { Tokens.tokenId eq tokenId } > 0
     }
 
-    override suspend fun generateToken(userId: Int): Token {
-        val tokenValue = java.util.UUID.randomUUID().toString()
+    override suspend fun generateToken(user: User): Token {
+        val jwtConfig = environment.config.config("jwt")
+        val tokenValue = JWT.create()
+            .withClaim("id", user.userId)
+            .withClaim("username", user.username)
         val createdAt = Instant.now()
         val expiresAt = createdAt.plus(30, ChronoUnit.DAYS)
-        val token = Token(0, userId, tokenValue, createdAt, expiresAt)
+        val token = user.userId?.let { Token(0, it, tokenValue, createdAt, expiresAt) }
         val tokenId = addToken(token)
         return token.copy(tokenId = tokenId)
     }
