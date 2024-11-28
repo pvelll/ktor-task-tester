@@ -1,6 +1,7 @@
 package com.sushkpavel.infrastructure.repository
 
 import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
 import com.sushkpavel.domain.model.Token
 import com.sushkpavel.domain.model.User
 import com.sushkpavel.domain.repository.TokenRepository
@@ -10,11 +11,13 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 import com.sushkpavel.domain.repository.TokenRepository.Tokens
 import com.sushkpavel.domain.repository.UserRepository.Users
+import com.sushkpavel.plugins.security.JwtConfig
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.koin.java.KoinJavaComponent.inject
 
-class TokenRepositoryImpl(private val database: Database) : TokenRepository {
+class TokenRepositoryImpl(database: Database) : TokenRepository {
     init {
         transaction(database) {
             SchemaUtils.create(Users)
@@ -48,13 +51,15 @@ class TokenRepositoryImpl(private val database: Database) : TokenRepository {
     }
 
     override suspend fun generateToken(user: User): Token {
-        val jwtConfig = environment.config.config("jwt")
+        val jwtConfig by inject<JwtConfig>(JwtConfig::class.java)
         val tokenValue = JWT.create()
-            .withClaim("id", user.userId)
+            .withAudience(jwtConfig.audience)
+            .withIssuer(jwtConfig.domain)
             .withClaim("username", user.username)
+            .sign(Algorithm.HMAC256(jwtConfig.secret))
         val createdAt = Instant.now()
         val expiresAt = createdAt.plus(30, ChronoUnit.DAYS)
-        val token = user.userId?.let { Token(0, it, tokenValue, createdAt, expiresAt) }
+        val token = Token(0, user.userId, tokenValue, createdAt, expiresAt)
         val tokenId = addToken(token)
         return token.copy(tokenId = tokenId)
     }

@@ -6,7 +6,7 @@ import java.time.Instant
 
 @Serializable
 data class User(
-    val userId: Int? = null,
+    val userId: Int,
     val username: String,
     val email: String,
     val passwordHash: String,
