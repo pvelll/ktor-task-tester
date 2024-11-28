@@ -6,6 +6,7 @@ import com.sushkpavel.domain.service.UserService
 import com.sushkpavel.infrastructure.repository.TokenRepositoryImpl
 import com.sushkpavel.infrastructure.repository.UserRepositoryImpl
 import com.sushkpavel.infrastructure.service.UserServiceImpl
+import com.sushkpavel.plugins.security.JwtConfig
 import io.ktor.server.application.*
 import org.jetbrains.exposed.sql.Database
 import org.koin.dsl.module
@@ -18,7 +19,7 @@ fun Application.configureKoin() {
         slf4jLogger()
         modules(module {
             factory<UserService> {
-                UserServiceImpl(get())
+                UserServiceImpl(get(),get())
             }
             factory<Database> {
                 Database.connect(
