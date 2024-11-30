@@ -2,7 +2,6 @@ package com.sushkpavel.plugins.security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.sushkpavel.domain.repository.TokenRepository
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
@@ -11,7 +10,7 @@ import java.time.Instant
 
 fun Application.configureSecurity() {
     val jwtConfig: JwtConfig by inject()
-    val tokenRepository: TokenRepository by inject()
+
     authentication {
         jwt {
             realm = jwtConfig.realm
@@ -23,12 +22,9 @@ fun Application.configureSecurity() {
                     .build()
             )
             validate { credential ->
-                val token = credential.payload.getClaim("token").asString()
-                val tokenRecord = tokenRepository.getTokenByValue(token)
-                if (tokenRecord != null && tokenRecord.expiresAt.isAfter(Instant.now()) && credential.payload.audience.contains(
-                        jwtConfig.audience
-                    )
-                ) {
+                val expiresAt = credential.payload.expiresAt?.time
+                val currentTime = Instant.now().toEpochMilli()
+                if (expiresAt != null && expiresAt > currentTime && credential.payload.audience.contains(jwtConfig.audience)) {
                     JWTPrincipal(credential.payload)
                 } else {
                     null
@@ -37,3 +33,4 @@ fun Application.configureSecurity() {
         }
     }
 }
+

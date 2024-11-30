@@ -12,10 +12,10 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
+    configureKoin()
     configureSecurity()
     configureUserController()
     configureLoginController()
-    configureKoin()
     configureSerialization()
 }
 

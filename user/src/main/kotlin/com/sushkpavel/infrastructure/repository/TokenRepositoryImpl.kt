@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.koin.java.KoinJavaComponent.inject
+import java.util.*
 
 class TokenRepositoryImpl(database: Database) : TokenRepository {
     init {
@@ -57,14 +58,17 @@ class TokenRepositoryImpl(database: Database) : TokenRepository {
         val tokenValue = JWT.create()
             .withAudience(jwtConfig.audience)
             .withIssuer(jwtConfig.domain)
+            .withExpiresAt(Date.from(expiresAt))
+            .withIssuedAt(Date.from(createdAt))
+            .withSubject(user.userId.toString())
             .withClaim("username", user.username)
-            .withExpiresAt(createdAt.plus(30,ChronoUnit.DAYS))
             .sign(Algorithm.HMAC256(jwtConfig.secret))
 
         val token = Token(0, user.userId, tokenValue, createdAt, expiresAt)
         val tokenId = addToken(token)
         return token.copy(tokenId = tokenId)
     }
+
 
     private fun toToken(row: ResultRow): Token =
         Token(

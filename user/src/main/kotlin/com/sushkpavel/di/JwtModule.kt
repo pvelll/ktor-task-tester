@@ -1,6 +1,5 @@
 package com.sushkpavel.di
 
-import com.sushkpavel.infrastructure.service.JwtService
 import com.sushkpavel.plugins.security.JwtConfig
 import org.koin.dsl.module
 
@@ -13,5 +12,4 @@ val jwtModule = module {
             secret = getProperty("jwt.secret")
         )
     }
-    single { JwtService(get()) }
 }
