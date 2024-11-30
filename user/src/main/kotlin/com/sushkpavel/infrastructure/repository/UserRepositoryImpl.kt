@@ -1,5 +1,6 @@
 package com.sushkpavel.infrastructure.repository
 
+import com.sushkpavel.domain.dto.UserDTO
 import com.sushkpavel.domain.model.User
 import com.sushkpavel.domain.repository.UserRepository
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -10,7 +11,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import java.time.Instant
 
-class UserRepositoryImpl(private val database: Database) : UserRepository {
+class UserRepositoryImpl(database: Database) : UserRepository {
 
     init {
         transaction(database) {
@@ -18,7 +19,7 @@ class UserRepositoryImpl(private val database: Database) : UserRepository {
         }
     }
 
-    override suspend fun create(user: User): Int = dbQuery {
+    override suspend fun create(user: UserDTO): Int = dbQuery {
         Users.insert {
             it[username] = user.username
             it[email] = user.email
@@ -73,10 +74,6 @@ class UserRepositoryImpl(private val database: Database) : UserRepository {
                 )
             }.singleOrNull()
         }
-    }
-
-    override suspend fun login(email: String, password: String): User? {
-        TODO("Not yet implemented")
     }
 
     private suspend fun <T> dbQuery(block: suspend () -> T): T =

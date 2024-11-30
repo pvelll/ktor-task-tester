@@ -1,6 +1,7 @@
 package com.sushkpavel
 
-import com.sushkpavel.controller.configureController
+import com.sushkpavel.controller.configureLoginController
+import com.sushkpavel.controller.configureUserController
 import com.sushkpavel.di.configureKoin
 import com.sushkpavel.plugins.*
 import com.sushkpavel.plugins.security.configureSecurity
@@ -12,7 +13,9 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     configureSecurity()
-    configureController()
+    configureUserController()
+    configureLoginController()
     configureKoin()
     configureSerialization()
 }
+

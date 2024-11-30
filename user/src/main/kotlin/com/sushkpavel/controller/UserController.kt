@@ -9,16 +9,12 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
-fun Application.configureController() {
+fun Application.configureUserController() {
     val INVALID_ID = "Invalid ID"
     val userService by inject<UserService>()
     routing {
         // Create user
-        post("/users") {
-            val user = call.receive<User>()
-            val id = userService.register(user)
-            call.respond(HttpStatusCode.Created, id)
-        }
+
 
         // Read user
         get("/users/{id}") {

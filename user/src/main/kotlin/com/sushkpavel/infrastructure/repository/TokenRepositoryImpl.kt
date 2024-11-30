@@ -52,13 +52,15 @@ class TokenRepositoryImpl(database: Database) : TokenRepository {
 
     override suspend fun generateToken(user: User): Token {
         val jwtConfig by inject<JwtConfig>(JwtConfig::class.java)
+        val createdAt = Instant.now()
+        val expiresAt = createdAt.plus(30, ChronoUnit.DAYS)
         val tokenValue = JWT.create()
             .withAudience(jwtConfig.audience)
             .withIssuer(jwtConfig.domain)
             .withClaim("username", user.username)
+            .withExpiresAt(createdAt.plus(30,ChronoUnit.DAYS))
             .sign(Algorithm.HMAC256(jwtConfig.secret))
-        val createdAt = Instant.now()
-        val expiresAt = createdAt.plus(30, ChronoUnit.DAYS)
+
         val token = Token(0, user.userId, tokenValue, createdAt, expiresAt)
         val tokenId = addToken(token)
         return token.copy(tokenId = tokenId)
