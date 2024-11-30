@@ -1,6 +1,6 @@
 package com.sushkpavel.domain.model
 
-import kotlinx.serialization.Contextual
+import com.sushkpavel.utils.InstantSerializer
 import kotlinx.serialization.Serializable
 import java.time.Instant
 
@@ -9,6 +9,8 @@ data class Token(
     val tokenId: Int,
     val userId: Int,
     val token: String,
-    @Contextual val createdAt: Instant,
-    @Contextual val expiresAt: Instant
+    @Serializable(with = InstantSerializer::class)
+    val createdAt: Instant? = null,
+    @Serializable(with = InstantSerializer::class)
+    val expiresAt: Instant? = null
 )

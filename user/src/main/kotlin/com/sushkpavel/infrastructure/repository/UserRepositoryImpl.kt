@@ -20,12 +20,16 @@ class UserRepositoryImpl(database: Database) : UserRepository {
     }
 
     override suspend fun create(user: UserDTO): Int = dbQuery {
-        Users.insert {
+        val insertStatement = Users.insert {
             it[username] = user.username
             it[email] = user.email
             it[passwordHash] = user.passwordHash
-        }[Users.userId]
+            it[createdAt] = Instant.now()
+            it[updatedAt] = Instant.now()
+        }
+        insertStatement[Users.userId]
     }
+
 
     override suspend fun read(id: Int): User? {
         return dbQuery {

@@ -21,7 +21,7 @@ import java.util.*
 class TokenRepositoryImpl(database: Database) : TokenRepository {
     init {
         transaction(database) {
-            SchemaUtils.create(Users)
+            SchemaUtils.create(Tokens)
         }
     }
 
@@ -30,8 +30,6 @@ class TokenRepositoryImpl(database: Database) : TokenRepository {
         Tokens.insert {
             it[userId] = token.userId
             it[Tokens.token] = token.token
-            it[createdAt] = token.createdAt
-            it[expiresAt] = token.expiresAt
         }[Tokens.tokenId]
     }
 
