@@ -1,5 +1,6 @@
 package com.sushkpavel.controller
 
+import com.sushkpavel.domain.dto.UserDTO
 import com.sushkpavel.domain.model.User
 import com.sushkpavel.domain.service.UserService
 import io.ktor.http.*
@@ -12,8 +13,13 @@ import org.koin.ktor.ext.inject
 fun Application.configureUserController() {
     val INVALID_ID = "Invalid ID"
     val userService by inject<UserService>()
-    routing {
+    routing() {
         // Create user
+        post("/users") {
+            val request = call.receive<UserDTO>()
+            val userId = userService.register(request)
+
+        }
 
 
         // Read user

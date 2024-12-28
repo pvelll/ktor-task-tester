@@ -5,6 +5,7 @@ import com.sushkpavel.domain.model.User
 import com.sushkpavel.domain.repository.UserRepository
 import org.jetbrains.exposed.sql.transactions.transaction
 import com.sushkpavel.domain.repository.UserRepository.Users
+import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -20,15 +21,21 @@ class UserRepositoryImpl(database: Database) : UserRepository {
     }
 
     override suspend fun create(user: UserDTO): Int = dbQuery {
-        val insertStatement = Users.insert {
-            it[username] = user.username
-            it[email] = user.email
-            it[passwordHash] = user.passwordHash
-            it[createdAt] = Instant.now()
-            it[updatedAt] = Instant.now()
+        val existingUser = Users.selectAll().where { Users.username eq user.username or (Users.email eq user.email) }.singleOrNull()
+        if (existingUser != null) {
+            HttpStatusCode.Conflict.value
+        } else {
+            Users.insert {
+                it[username] = user.username
+                it[email] = user.email
+                it[passwordHash] = user.passwordHash
+                it[createdAt] = Instant.now()
+                it[updatedAt] = Instant.now()
+            }
+            HttpStatusCode.Created.value
         }
-        insertStatement[Users.userId]
     }
+
 
 
     override suspend fun read(id: Int): User? {
@@ -43,8 +50,7 @@ class UserRepositoryImpl(database: Database) : UserRepository {
                         it[Users.createdAt],
                         it[Users.updatedAt]
                     )
-                }
-                .singleOrNull()
+                }.singleOrNull()
         }
     }
 
