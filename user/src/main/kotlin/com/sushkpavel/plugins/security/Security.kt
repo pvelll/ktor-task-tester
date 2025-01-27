@@ -2,9 +2,12 @@ package com.sushkpavel.plugins.security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.sushkpavel.domain.dto.NotifyMessageDTO
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
+import io.ktor.server.response.*
 import org.koin.ktor.ext.inject
 import java.time.Instant
 
@@ -29,6 +32,12 @@ fun Application.configureSecurity() {
                 } else {
                     null
                 }
+            }
+            challenge { _, _ ->
+                call.respond(
+                    HttpStatusCode.Unauthorized,
+                    NotifyMessageDTO(message = "Unauthorized", code = HttpStatusCode.Unauthorized.value)
+                )
             }
         }
     }

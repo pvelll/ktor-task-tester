@@ -11,7 +11,7 @@ import com.sushkpavel.domain.service.UserService
 class UserServiceImpl(private val userRepository: UserRepository, private val tokenRepository: TokenRepository) : UserService {
     override suspend fun login(credentials: Credentials): Token? {
         val user = userRepository.getUserByEmail(credentials.email)
-        return if(user!= null && credentials.password == user.passwordHash){
+        return if(user!= null && credentials.passwordHash == user.passwordHash){
             tokenRepository.generateToken(user)
         } else {
             null

@@ -11,19 +11,23 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 fun Application.configureLoginController() {
     val userService by inject<UserService>()
+    val logger = LoggerFactory.getLogger("USER_CONTROLLER")
     routing {
         post("/register") {
+            logger.info("register invoked")
             val user = call.receive<UserDTO>()
-            val id = userService.register(user)
-            if (id != null) {
-                call.respond(HttpStatusCode.Created, mapOf("id" to id))
-            } else {
-                call.respond(NotifyMessageDTO(message = "Unable to register", code = HttpStatusCode.BadRequest.value))
-            }
+            val response = userService.register(user)?.let { _ ->
+                NotifyMessageDTO(message = "Created", code = HttpStatusCode.Created.value)
+            } ?: NotifyMessageDTO(message = "Unable to register", code = HttpStatusCode.BadRequest.value)
+
+            call.respond(response)
         }
+
         post("/login") {
             val credentials = call.receive<Credentials>()
             val token = userService.login(credentials)
@@ -48,8 +52,8 @@ fun Application.configureLoginController() {
                 } else {
                     call.respond(
                         NotifyMessageDTO(
-                            message = "Missing or invalid Authorization header",
-                            code = HttpStatusCode.BadRequest.value
+                            message = "Unauthorized",
+                            code = HttpStatusCode.Unauthorized.value
                         )
                     )
                 }
