@@ -2,7 +2,9 @@ package com.sushkpavel.plugins.security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.sun.security.auth.UserPrincipal
 import com.sushkpavel.domain.dto.NotifyMessageDTO
+import com.sushkpavel.domain.model.Role
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -25,19 +27,24 @@ fun Application.configureSecurity() {
                     .build()
             )
             validate { credential ->
-                val expiresAt = credential.payload.expiresAt?.time
-                val currentTime = Instant.now().toEpochMilli()
-                if (expiresAt != null && expiresAt > currentTime && credential.payload.audience.contains(jwtConfig.audience)) {
-                    JWTPrincipal(credential.payload)
+                val userId = credential.payload.subject?.toIntOrNull()
+                val username = credential.payload.getClaim("username").asString()
+                val roleString = credential.payload.getClaim("role").asString()
+                val role = roleString?.let { Role.valueOf(it) }
+
+                if (userId != null && username != null && role != null) {
+                    UserPrincipal(userId, username, role)
                 } else {
                     null
                 }
             }
             challenge { _, _ ->
-                call.respond(
-                    HttpStatusCode.Unauthorized,
-                    NotifyMessageDTO(message = "Unauthorized", code = HttpStatusCode.Unauthorized.value)
-                )
+                HttpStatusCode.Unauthorized.let {
+                    call.respond(
+                        it,
+                        NotifyMessageDTO(message = it.toString(), code = it.value)
+                    )
+                }
             }
         }
     }

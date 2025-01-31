@@ -1,6 +1,7 @@
 package com.sushkpavel.infrastructure.repository
 
 import com.sushkpavel.domain.dto.UserDTO
+import com.sushkpavel.domain.model.Role
 import com.sushkpavel.domain.model.User
 import com.sushkpavel.domain.repository.UserRepository
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -42,14 +43,7 @@ class UserRepositoryImpl(database: Database) : UserRepository {
         return dbQuery {
             Users.selectAll().where { Users.userId eq id }
                 .map {
-                    User(
-                        it[Users.userId],
-                        it[Users.username],
-                        it[Users.email],
-                        it[Users.passwordHash],
-                        it[Users.createdAt],
-                        it[Users.updatedAt]
-                    )
+                    toUser(it)
                 }.singleOrNull()
         }
     }
@@ -74,16 +68,27 @@ class UserRepositoryImpl(database: Database) : UserRepository {
     override suspend fun getUserByEmail(email: String): User? {
         return dbQuery {
             Users.selectAll().where { Users.email eq email }.map {
-                User(
-                    it[Users.userId],
-                    it[Users.username],
-                    it[Users.email],
-                    it[Users.passwordHash],
-                    it[Users.createdAt],
-                    it[Users.updatedAt]
-                )
+                toUser(it)
             }.singleOrNull()
         }
+    }
+
+    override suspend fun updateRole(id: Int, role: Role) = dbQuery {
+        Users.update({ Users.userId eq id }) {
+            it[Users.role] = role.name
+            it[updatedAt] = Instant.now()
+        }
+    }
+    private fun toUser(row: ResultRow): User {
+        return User(
+            userId = row[Users.userId],
+            username = row[Users.username],
+            email = row[Users.email],
+            passwordHash = row[Users.passwordHash],
+            role = Role.valueOf(row[Users.role]),
+            createdAt = row[Users.createdAt],
+            updatedAt = row[Users.updatedAt]
+        )
     }
 
     private suspend fun <T> dbQuery(block: suspend () -> T): T =

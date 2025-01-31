@@ -20,7 +20,7 @@ interface TokenRepository {
     object Tokens : Table() {
         val tokenId = integer("token_id").autoIncrement()
         val userId = integer("user_id").references(UserRepository.Users.userId, onDelete = ReferenceOption.CASCADE)
-        val token = varchar("token", 255).uniqueIndex()
+        val token = varchar("token", 512).uniqueIndex()
         val createdAt = timestamp("created_at").defaultExpression(org.jetbrains.exposed.sql.javatime.CurrentTimestamp)
         val expiresAt = timestamp("expires_at").clientDefault { Instant.now().plus(30, ChronoUnit.DAYS) }
 

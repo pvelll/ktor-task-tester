@@ -13,4 +13,5 @@ interface UserService {
     suspend fun update(id: Int, user: User)
     suspend fun getUserByEmail(email: String) : User?
     suspend fun delete(id: Int)
+    suspend fun getTokenByValue(token : String) : Token?
 }

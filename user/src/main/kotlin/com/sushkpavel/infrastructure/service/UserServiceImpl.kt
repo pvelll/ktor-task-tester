@@ -51,6 +51,10 @@ class UserServiceImpl(private val userRepository: UserRepository, private val to
     override suspend fun delete(id: Int) {
         userRepository.delete(id)
     }
+
+    override suspend fun getTokenByValue(token: String): Token? {
+        return tokenRepository.getTokenByValue(token)
+    }
 }
 
 

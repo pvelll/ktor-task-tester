@@ -4,6 +4,7 @@ import com.sushkpavel.domain.dto.Credentials
 import com.sushkpavel.domain.dto.NotifyMessageDTO
 import com.sushkpavel.domain.dto.UserDTO
 import com.sushkpavel.domain.service.UserService
+import com.sushkpavel.utils.getTokenFromHeader
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -36,7 +37,7 @@ fun Application.configureLoginController() {
             } else {
                 call.respond(
                     NotifyMessageDTO(
-                        message = "Incorrect login or password",
+                        message = HttpStatusCode.BadRequest.toString(),
                         code = HttpStatusCode.BadRequest.value
                     )
                 )
@@ -44,15 +45,13 @@ fun Application.configureLoginController() {
         }
         authenticate {
             post("/logout") {
-                val authorizationHeader = call.request.headers["Authorization"]
-                val token = authorizationHeader?.takeIf { it.startsWith("Bearer ") }?.removePrefix("Bearer ")?.trim()
-
+                val token = getTokenFromHeader(call)
                 if (token != null && userService.logout(token)) {
                     call.respond(NotifyMessageDTO(message = "Logged out successfully", code = HttpStatusCode.OK.value))
                 } else {
                     call.respond(
                         NotifyMessageDTO(
-                            message = "Unauthorized",
+                            message = HttpStatusCode.Unauthorized.toString(),
                             code = HttpStatusCode.Unauthorized.value
                         )
                     )

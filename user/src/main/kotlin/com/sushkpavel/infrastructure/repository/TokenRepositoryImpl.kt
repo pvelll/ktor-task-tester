@@ -10,7 +10,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import com.sushkpavel.domain.repository.TokenRepository.Tokens
-import com.sushkpavel.domain.repository.UserRepository.Users
 import com.sushkpavel.plugins.security.JwtConfig
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
@@ -60,8 +59,8 @@ class TokenRepositoryImpl(database: Database) : TokenRepository {
             .withIssuedAt(Date.from(createdAt))
             .withSubject(user.userId.toString())
             .withClaim("username", user.username)
+            .withClaim("role", user.role.name)
             .sign(Algorithm.HMAC256(jwtConfig.secret))
-
         val token = Token(0, user.userId, tokenValue, createdAt, expiresAt)
         val tokenId = addToken(token)
         return token.copy(tokenId = tokenId)

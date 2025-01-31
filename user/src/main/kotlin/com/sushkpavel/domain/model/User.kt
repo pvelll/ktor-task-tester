@@ -10,6 +10,8 @@ data class User(
     val username: String,
     val email: String,
     val passwordHash: String,
+    val role: Role = Role.USER, // Роль по умолчанию
     @Contextual val createdAt: Instant? = null,
     @Contextual val updatedAt: Instant? = null
 )
+
