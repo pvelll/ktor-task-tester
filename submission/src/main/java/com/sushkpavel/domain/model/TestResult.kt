@@ -1,6 +1,8 @@
-package com.sushkpavel.data.model
+package com.sushkpavel.domain.model
 
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
+import java.time.Instant
 
 @Serializable
 data class TestResult(
@@ -9,5 +11,6 @@ data class TestResult(
     val solutionId: String,
     val testId: String,
     val actualResult: String,
-    val success: Boolean
+    val success: Boolean,
+    @Contextual val createdAt : Instant
 )

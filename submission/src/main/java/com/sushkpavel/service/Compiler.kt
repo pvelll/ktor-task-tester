@@ -1,7 +1,7 @@
 package com.sushkpavel.service
 
-import com.sushkpavel.data.model.SolutionSubmission
-import com.sushkpavel.data.model.TestResult
+import com.sushkpavel.domain.model.SolutionSubmission
+import com.sushkpavel.domain.model.TestResult
 import com.sushkpavel.domain.repo.CodeTestRepository
 import kotlinx.coroutines.*
 import java.io.File
