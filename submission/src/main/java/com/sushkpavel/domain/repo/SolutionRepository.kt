@@ -4,5 +4,5 @@ import com.sushkpavel.domain.model.SolutionSubmission
 
 interface SolutionRepository {
     suspend fun saveSubmission(submission: SolutionSubmission)
-    suspend fun getSubmissionById(id: String): SolutionSubmission?
+    suspend fun getSubmissionById(id: Int): SolutionSubmission?
 }

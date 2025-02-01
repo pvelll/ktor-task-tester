@@ -12,9 +12,9 @@ import java.time.Instant
 
 class SolutionRepositoryImpl(database: Database) : SolutionRepository {
     object Submissions : Table() {
-        val id = varchar("id", length = 36).autoIncrement()
-        val userId = varchar("user_id", length = 36)
-        val taskId = varchar("task_id", length = 36)
+        val id = integer("id").autoIncrement()
+        val userId = integer("user_id")
+        val taskId = integer("task_id")
         val code = text("code")
         val language = varchar("language", length = 50)
         val createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp)
@@ -35,7 +35,6 @@ class SolutionRepositoryImpl(database: Database) : SolutionRepository {
 
     override suspend fun saveSubmission(submission: SolutionSubmission): Unit = dbQuery {
         Submissions.insert {
-            it[id] = submission.id
             it[userId] = submission.userId
             it[taskId] = submission.taskId
             it[code] = submission.code
@@ -44,7 +43,7 @@ class SolutionRepositoryImpl(database: Database) : SolutionRepository {
         }
     }
 
-    override suspend fun getSubmissionById(id: String): SolutionSubmission? = dbQuery {
+    override suspend fun getSubmissionById(id: Int): SolutionSubmission? = dbQuery {
         Submissions.selectAll().where { Submissions.id eq id }
             .map { rowToSubmission(it) }
             .singleOrNull()

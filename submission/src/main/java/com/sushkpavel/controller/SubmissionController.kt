@@ -44,13 +44,10 @@ fun Application.configureSubmissionController(){
 //                        testResultRepository.saveTestResult(testResult)
 //                    }
 
-//                    call.respond(
-//                        status = HttpStatusCode.OK,
-//                        message = SubmissionResponse(
-//                            submissionId = submission.id,
-//                            results = testResults
-//                        )
-//                    )
+                    call.respond(
+                        status = HttpStatusCode.OK,
+                        message = "TEST"
+                    )
                 }
             }
         }
