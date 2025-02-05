@@ -35,6 +35,7 @@ fun Application.configureSubmissionController() {
 
 
                     //TODO: Neccesary logic for check task up
+                    //TODO: Long timeout (easy) or websocket...
 //                    val testResults = sendToCheckerService(submission)
 
 //                    testResults.forEach { testResult ->
