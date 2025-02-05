@@ -79,3 +79,4 @@ class TokenRepositoryImpl(database: Database) : TokenRepository {
     private suspend fun <T> dbQuery(block: suspend () -> T): T =
         newSuspendedTransaction(Dispatchers.IO) { block() }
 }
+
