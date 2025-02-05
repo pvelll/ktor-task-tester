@@ -3,6 +3,7 @@ package com.sushkpavel.controller
 import com.sushkpavel.domain.dto.SubmissionRequest
 import com.sushkpavel.domain.model.SolutionSubmission
 import com.sushkpavel.domain.repo.SolutionRepository
+import com.sushkpavel.domain.service.SubmissionService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -13,28 +14,24 @@ import io.ktor.server.auth.*
 import org.koin.ktor.ext.inject
 import java.time.Instant
 
-fun Application.configureSubmissionController(){
-    val solutionRepository by inject<SolutionRepository>()
+fun Application.configureSubmissionController() {
+//    val solutionRepository by inject<SolutionRepository>()
+    val solutionService by inject<SubmissionService>()
     routing {
         route("/submit") {
             authenticate {
                 post {
                     val submissionRequest = call.receive<SubmissionRequest>()
                     val principal = call.principal<UserPrincipal>()
-
-                    val submission = principal?.let { it1 ->
+                    principal?.let { userPrincipal ->
                         SolutionSubmission(
-                            userId = it1.userId,
+                            userId = userPrincipal.userId,
                             taskId = submissionRequest.taskId,
                             code = submissionRequest.code,
                             language = submissionRequest.language,
                             createdAt = Instant.now()
                         )
-                    }
-
-                    if (submission != null) {
-                        solutionRepository.saveSubmission(submission)
-                    }
+                    }?.let { submission -> solutionService.saveSubmission(submission) }
 
 
                     //TODO: Neccesary logic for check task up
