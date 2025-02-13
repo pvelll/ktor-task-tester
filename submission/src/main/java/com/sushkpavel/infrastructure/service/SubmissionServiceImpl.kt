@@ -11,6 +11,7 @@ class SubmissionServiceImpl(
     private val solutionRepository: SolutionRepository,
     private val testTaskRepository: TestTaskRepository
 ) : SubmissionService {
+
     override suspend fun saveSubmission(submission: SolutionSubmission) {
             solutionRepository.saveSubmission(submission)
     }

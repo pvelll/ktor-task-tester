@@ -1,4 +1,4 @@
-package model
+package com.sushkpavel.domain.model
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
