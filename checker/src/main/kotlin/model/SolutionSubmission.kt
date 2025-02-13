@@ -1,16 +1,15 @@
-package com.sushkpavel.domain.model
+package model
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import java.time.Instant
 
 @Serializable
-data class TestResult(
-    val id: Int,
+data class SolutionSubmission(
+    val id: Int? = null,
     val userId: Int,
-    val submissionId: Int,
     val taskId: Int,
-    val actualResult: String,
-    val success: Boolean,
+    val code: String,
+    val language : String,
     @Contextual val createdAt : Instant
 )

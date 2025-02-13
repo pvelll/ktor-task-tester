@@ -56,10 +56,10 @@ class SolutionRepositoryImpl(database: Database) : SolutionRepository {
             taskId = row[Submissions.taskId],
             code = row[Submissions.code],
             language = row[Submissions.language],
-            createdAt = Instant.now()
+            createdAt = row[Submissions.createdAt]
         )
     }
 
-    private suspend fun <T> dbQuery(block: suspend () -> T): T =
+    private suspend inline fun <T> dbQuery(crossinline block: () -> T): T =
         newSuspendedTransaction(Dispatchers.IO) { block() }
 }

@@ -18,7 +18,7 @@ val submissionModule = module {
     }
 
     factory<SubmissionService>{
-        SubmissionServiceImpl(get())
+        SubmissionServiceImpl(get(),get())
     }
 
     factory<SolutionRepository>{
