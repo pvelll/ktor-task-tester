@@ -1,6 +1,7 @@
 package com.sushkpavel.infrastructure.executor
 
 import com.sushkpavel.domain.executor.LanguageExecutor
+import com.sushkpavel.domain.model.TestCaseResult
 import com.sushkpavel.domain.model.TestResult
 
 class CppExecutor: LanguageExecutor {
@@ -8,7 +9,12 @@ class CppExecutor: LanguageExecutor {
         TODO("Not yet implemented")
     }
 
-    override fun execute(compilationResult: String, input: String): TestResult {
+    override fun execute(
+        compilationResult: String,
+        input: String,
+        testId: String,
+        expectedOutput: String
+    ): TestCaseResult {
         TODO("Not yet implemented")
     }
 }

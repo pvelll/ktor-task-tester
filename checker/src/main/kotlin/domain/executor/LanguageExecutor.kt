@@ -1,8 +1,8 @@
 package com.sushkpavel.domain.executor
 
-import com.sushkpavel.domain.model.TestResult
+import com.sushkpavel.domain.model.TestCaseResult
 
 interface LanguageExecutor {
     fun compile(code: String): String
-    fun execute(compilationResult: String, input: String): TestResult
+    fun execute(compilationResult: String, input: String, testId: String, expectedOutput: String): TestCaseResult
 }

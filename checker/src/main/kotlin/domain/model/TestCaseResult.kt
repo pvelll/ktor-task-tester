@@ -2,12 +2,11 @@ package com.sushkpavel.domain.model
 
 import kotlinx.serialization.Serializable
 
-class CompilationException(message: String) :Exception(message)
-
-
 @Serializable
-data class TestResult(
+data class TestCaseResult(
     val testId: String,
+    val success: Boolean,
     val actualResult: String,
-    val success: Boolean
+    val expectedResult: String? = null,
+    val error: String? = null
 )
