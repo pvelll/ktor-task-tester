@@ -11,10 +11,10 @@ import org.koin.dsl.module
 
 
 val userModule = module {
-    factory<UserService> {
+    single<UserService> {
         UserServiceImpl(get(), get())
     }
-    factory<Database> {
+    single<Database> {
         Database.connect(
             url = "jdbc:mysql://127.0.0.1:3306/ktor_task_tester",
             user = "root",

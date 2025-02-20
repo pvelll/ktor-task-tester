@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.Database
 import org.koin.dsl.module
 
 val submissionModule = module {
-    factory<Database> {
+    single<Database> {
         Database.connect(
             url = "jdbc:mysql://127.0.0.1:3306/ktor_task_tester",
             user = "root",
