@@ -1,5 +1,6 @@
 package com.sushkpavel.controller
 
+import com.sun.org.slf4j.internal.LoggerFactory
 import com.sushkpavel.domain.dto.Credentials
 import com.sushkpavel.domain.dto.NotifyMessageDTO
 import com.sushkpavel.domain.dto.UserDTO
@@ -12,15 +13,12 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+
 
 fun Application.configureLoginController() {
     val userService by inject<UserService>()
-    val logger = LoggerFactory.getLogger("USER_CONTROLLER")
     routing {
         post("/register") {
-            logger.info("register invoked")
             val user = call.receive<UserDTO>()
             val response = userService.register(user)?.let { _ ->
                 NotifyMessageDTO(message = "Created", code = HttpStatusCode.Created.value)

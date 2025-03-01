@@ -3,15 +3,15 @@ package com.sushkpavel.infrastructure.service
 import com.sushkpavel.domain.TestCasesRepository
 import com.sushkpavel.domain.model.SubmissionRequest
 import com.sushkpavel.domain.model.TestCase
+import com.sushkpavel.domain.model.TestCaseDTO
 import com.sushkpavel.domain.model.TestCaseResult
 import com.sushkpavel.domain.model.TestResult
 import com.sushkpavel.domain.service.CheckerService
 import com.sushkpavel.infrastructure.executor.factory.LanguageExecutorFactory
 import org.koin.java.KoinJavaComponent.inject
 
-class CheckerServiceImpl : CheckerService {
+class CheckerServiceImpl(val testRepository : TestCasesRepository) : CheckerService {
     private val executorFactory = LanguageExecutorFactory()
-    private val testRepository by inject<TestCasesRepository>(TestCasesRepository::class.java)
 
     override suspend fun checkTask(subRequest: SubmissionRequest): TestResult {
         val executor = executorFactory.build(subRequest.language)
@@ -38,7 +38,7 @@ class CheckerServiceImpl : CheckerService {
             }
         }
 
-        val finalMessage = if (allTestsPassed) "Все тесты пройдены успешно" else "Тесты не пройдены"
+        val finalMessage = if (allTestsPassed) "All test passed" else "Fail :("
         val testResult = TestResult(success = allTestsPassed, actualResult = finalMessage, testId = subRequest.taskId.toString())
 
         return testResult
@@ -46,5 +46,9 @@ class CheckerServiceImpl : CheckerService {
 
     override suspend fun getTestCases(taskId: Int): List<TestCase> {
         return testRepository.getTestCasesByTaskId(taskId)
+    }
+
+    override suspend fun postTestCases(testCaseDTO: TestCaseDTO): Int {
+        return testRepository.postTestCases(testCaseDTO)
     }
 }
