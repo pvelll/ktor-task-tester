@@ -7,34 +7,48 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.*
-class JavaExecutor : LanguageExecutor {
+
+class KotlinExecutor : LanguageExecutor {
 
     override fun compile(code: String): String {
+        // Генерируем уникальное имя класса
         val uuid = UUID.randomUUID().toString().replace("-", "")
         val className = "Solution$uuid"
-        val sourceFileName = "$className.java"
+        val sourceFileName = "$className.kt"
 
-        val tempDir = Files.createTempDirectory("java_executor")
-        println("temp dir: ${tempDir.toAbsolutePath()}")
+        // Создаём временную директорию
+        val tempDir = Files.createTempDirectory("kotlin_executor")
+        println("Временная директория создана: ${tempDir.toAbsolutePath()}")
+
+        // Путь к файлу исходного кода
         val sourceFilePath = tempDir.resolve(sourceFileName)
 
-        val modifiedCode = code.replace("public class Solution", "public class $className")
-        Files.write(sourceFilePath, modifiedCode.toByteArray())
-        println("wrote code in file: $sourceFilePath")
+        // Заменяем объявление класса на уникальное имя
+        val modifiedCode = code.replace("class Solution", "class $className")
+        println("Код модифицирован для компиляции.")
 
-        val processBuilder = ProcessBuilder("javac", sourceFileName)
+        // Записываем код в файл
+        Files.write(sourceFilePath, modifiedCode.toByteArray())
+        println("Код записан в файл: $sourceFilePath")
+
+        // Компилируем код
+        val processBuilder = ProcessBuilder("kotlinc", sourceFileName, "-include-runtime", "-d", "$className.jar")
         processBuilder.directory(tempDir.toFile())
+        println("Компиляция кода...")
         val process = processBuilder.start()
         val exitCode = process.waitFor()
 
+        // Проверяем на ошибки компиляции
         if (exitCode != 0) {
             val errorStream = process.errorStream.bufferedReader().readText()
-            println("copilation error: $errorStream")
+            println("Ошибка компиляции: $errorStream")
+            // Удаляем временные файлы
             tempDir.toFile().deleteRecursively()
             throw CompilationException("Ошибка компиляции:\n$errorStream")
         }
 
-        println("finally compiled")
+        println("Код успешно скомпилирован.")
+        // Возвращаем информацию о компиляции (путь и имя класса)
         return "$tempDir|$className"
     }
 
@@ -50,7 +64,8 @@ class JavaExecutor : LanguageExecutor {
         val tempDir = Paths.get(tempDirPath)
         println("Используется временная директория: $tempDir")
 
-        val processBuilder = ProcessBuilder("java", "-cp", tempDir.toString(), className)
+        // Запуск скомпилированного Kotlin-кода
+        val processBuilder = ProcessBuilder("java", "-jar", "$className.jar")
         processBuilder.directory(tempDir.toFile())
         processBuilder.redirectErrorStream(true)
 
