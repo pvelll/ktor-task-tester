@@ -29,6 +29,7 @@ services:
   checker-service:
     build:
       context: ./checker
+    restart: always
     ports:
       - "8084:8084"
     networks:

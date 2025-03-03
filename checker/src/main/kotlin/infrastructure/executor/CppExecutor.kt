@@ -56,7 +56,6 @@ class CppExecutor : LanguageExecutor {
         println("Запуск программы...")
         val process = processBuilder.start()
 
-        // Передача входных данных в программу через OutputStream
         process.outputStream.bufferedWriter().use { writer ->
             writer.write(input)
             writer.newLine()
@@ -64,16 +63,13 @@ class CppExecutor : LanguageExecutor {
         }
         println("Входные данные переданы в программу.")
 
-        // Чтение вывода программы
         val output = process.inputStream.bufferedReader().readText().trim()
         val exitCode = process.waitFor()
         println("Вывод программы: $output")
 
-        // Проверяем успех выполнения теста
         val success = exitCode == 0 && output == expectedOutput.trim()
         println("Результат выполнения: success = $success")
 
-        // Если была ошибка, читаем её
         val errorOutput = if (exitCode != 0) {
             val error = process.errorStream.bufferedReader().readText()
             println("Ошибка выполнения: $error")
@@ -82,7 +78,6 @@ class CppExecutor : LanguageExecutor {
             null
         }
 
-        // Формируем результат тест-кейса
         return TestCaseResult(
             testId = testId,
             success = success,
