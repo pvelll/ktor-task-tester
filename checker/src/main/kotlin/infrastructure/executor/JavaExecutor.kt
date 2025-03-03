@@ -29,7 +29,7 @@ class JavaExecutor : LanguageExecutor {
 
         if (exitCode != 0) {
             val errorStream = process.errorStream.bufferedReader().readText()
-            println("copilation error: $errorStream")
+            println("compilation error: $errorStream")
             tempDir.toFile().deleteRecursively()
             throw CompilationException("Ошибка компиляции:\n$errorStream")
         }
