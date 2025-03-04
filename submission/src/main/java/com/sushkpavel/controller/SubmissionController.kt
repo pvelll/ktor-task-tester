@@ -24,14 +24,22 @@ fun Application.configureSubmissionController() {
                         call.respond(HttpStatusCode.Unauthorized, "User is not logged in")
                         return@post
                     }
+                    val id = solutionService.saveSubmission(SolutionSubmission(
+                        userId = principal.userId,
+                        taskId = submissionRequest.taskId,
+                        code = submissionRequest.code,
+                        language = submissionRequest.language,
+                        createdAt = Instant.now()
+                    ))
                     val submission = SolutionSubmission(
+                        id = id,
                         userId = principal.userId,
                         taskId = submissionRequest.taskId,
                         code = submissionRequest.code,
                         language = submissionRequest.language,
                         createdAt = Instant.now()
                     )
-                    solutionService.saveSubmission(submission)
+
                     val testResult = solutionService.checkSubmission(submission)
                     call.respond(testResult)
                 }

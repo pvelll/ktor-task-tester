@@ -33,14 +33,16 @@ class SolutionRepositoryImpl(database: Database) : SolutionRepository {
         }
     }
 
-    override suspend fun saveSubmission(submission: SolutionSubmission): Unit = dbQuery {
-        Submissions.insert {
+    override suspend fun saveSubmission(submission: SolutionSubmission): Int = dbQuery {
+        val insertedId = Submissions.insert {
             it[userId] = submission.userId
             it[taskId] = submission.taskId
             it[code] = submission.code
             it[language] = submission.language
             it[createdAt] = Instant.now()
-        }
+        } get Submissions.id // Получаем ID вставленной записи
+
+        insertedId
     }
 
     override suspend fun getSubmissionById(id: Int): SolutionSubmission? = dbQuery {

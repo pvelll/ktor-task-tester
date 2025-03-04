@@ -12,9 +12,7 @@ class SubmissionServiceImpl(
     private val testTaskRepository: TestTaskRepository
 ) : SubmissionService {
 
-    override suspend fun saveSubmission(submission: SolutionSubmission) {
-            solutionRepository.saveSubmission(submission)
-    }
+    override suspend fun saveSubmission(submission: SolutionSubmission) = solutionRepository.saveSubmission(submission)
 
     override suspend fun getSubmission(id: Int): SolutionSubmission? {
         return solutionRepository.getSubmissionById(id)
