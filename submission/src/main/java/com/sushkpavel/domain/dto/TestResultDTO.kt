@@ -6,7 +6,7 @@ import java.time.Instant
 
 @Serializable
 data class TestResultDTO(
-    val taskId: Int,
+    val testId: Int,
     val actualResult: String,
     val success: Boolean
 )

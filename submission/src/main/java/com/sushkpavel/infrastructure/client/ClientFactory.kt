@@ -10,11 +10,7 @@ class ClientFactory {
     fun build() : HttpClient {
         return HttpClient(CIO){
             install(ContentNegotiation) {
-                json(Json {
-                    isLenient = true
-                    ignoreUnknownKeys = true
-                    coerceInputValues = true
-                })
+                json(Json)
             }
         }
     }

@@ -13,6 +13,6 @@ fun Application.configureKoin() {
             "jwt.secret" to config.property("jwt.secret").getString()
         )
         properties(jwtConfig)
-        modules(submissionModule, jwtModule)
+        modules(submissionModule, jwtModule,testTaskModule)
     }
 }

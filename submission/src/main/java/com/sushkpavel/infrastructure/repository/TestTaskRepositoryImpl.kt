@@ -8,6 +8,8 @@ import com.sushkpavel.domain.repo.TestTaskRepository
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.*
@@ -43,6 +45,7 @@ class TestTaskRepositoryImpl(private val client: HttpClient, database: Database)
 
     override suspend fun testTask(submissionRequest: SubmissionRequest): TestResultDTO {
         val response = client.post("http://localhost:8084/check-solution") {
+            contentType(ContentType.Application.Json)
             setBody(submissionRequest)
         }.bodyAsText()
         return Json.decodeFromString<TestResultDTO>(response)
