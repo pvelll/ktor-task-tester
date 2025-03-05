@@ -1,5 +1,6 @@
 package com.sushkpavel.domain.model
 
+import com.sushkpavel.utils.InstantSerializer
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import java.time.Instant
@@ -11,5 +12,6 @@ data class SolutionSubmission(
     val taskId: Int,
     val code: String,
     val language : String,
-    @Contextual val createdAt : Instant
+    @Serializable(with = InstantSerializer::class)
+    val createdAt : Instant
 )
