@@ -1,40 +1,27 @@
 package com.sushkpavel.infrastructure.executor
 
 import com.sushkpavel.domain.executor.LanguageExecutor
-import com.sushkpavel.domain.model.*
+import com.sushkpavel.domain.model.TestCaseResult
 import java.io.*
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.*
 
-class KotlinExecutor : LanguageExecutor {
+class PythonExecutor : LanguageExecutor {
 
     override fun compile(code: String): String {
         val uuid = UUID.randomUUID().toString().replace("-", "")
-        val className = "Solution$uuid"
-        val sourceFileName = "$className.kt"
+        val scriptFileName = "script_$uuid.py"
 
-        val tempDir = Files.createTempDirectory("kotlin_executor")
-        println("dir: ${tempDir.toAbsolutePath()}")
+        val tempDir = Files.createTempDirectory("python_executor")
+        println("Временная директория создана: ${tempDir.toAbsolutePath()}")
 
-        val sourceFilePath = tempDir.resolve(sourceFileName)
+        val scriptFilePath = tempDir.resolve(scriptFileName)
+        Files.write(scriptFilePath, code.toByteArray())
+        println("Код записан в файл: $scriptFilePath")
 
-        val modifiedCode = code.replace("class Solution", "class $className")
-        Files.write(sourceFilePath, modifiedCode.toByteArray())
-
-        val processBuilder = ProcessBuilder("kotlinc", sourceFileName, "-include-runtime", "-d", "$className.jar")
-        processBuilder.directory(tempDir.toFile())
-        val process = processBuilder.start()
-        val exitCode = process.waitFor()
-
-        if (exitCode != 0) {
-            val errorStream = process.errorStream.bufferedReader().readText()
-            println("compilation error: $errorStream")
-            tempDir.toFile().deleteRecursively()
-            throw CompilationException("compilation error:\n$errorStream")
-        }
-        return "$tempDir|$className"
+        return "$tempDir|$scriptFileName"
     }
 
     override fun execute(
@@ -43,15 +30,17 @@ class KotlinExecutor : LanguageExecutor {
         testId: String,
         expectedOutput: String
     ): TestCaseResult {
-        println("test case: testId = $testId, input = $input, expectedOutput = $expectedOutput")
+        println("testId = $testId, input = $input, expectedOutput = $expectedOutput")
 
-        val (tempDirPath, className) = compilationResult.split("|")
+        val (tempDirPath, scriptFileName) = compilationResult.split("|")
         val tempDir = Paths.get(tempDirPath)
-        val processBuilder = ProcessBuilder("java", "-jar", "$className.jar")
+        println("temp dir: $tempDir")
+
+        val processBuilder = ProcessBuilder("python3", scriptFileName)
         processBuilder.directory(tempDir.toFile())
         processBuilder.redirectErrorStream(true)
-        val process = processBuilder.start()
 
+        val process = processBuilder.start()
         process.outputStream.bufferedWriter().use { writer ->
             writer.write(input)
             writer.newLine()
@@ -59,16 +48,17 @@ class KotlinExecutor : LanguageExecutor {
         }
         val output = process.inputStream.bufferedReader().readText().trim()
         val exitCode = process.waitFor()
+        println("Вывод программы: $output")
         val success = exitCode == 0 && output == expectedOutput.trim()
+        println("success = $success")
 
         val errorOutput = if (exitCode != 0) {
             val error = process.errorStream.bufferedReader().readText()
-            println("error: $error")
+            println("e: $error")
             error
         } else {
             null
         }
-
 
         return TestCaseResult(
             testId = testId,

@@ -30,10 +30,9 @@ class CppExecutor : LanguageExecutor {
             val errorStream = process.errorStream.bufferedReader().readText()
             println("compilation error: $errorStream")
             tempDir.toFile().deleteRecursively()
-            throw CompilationException("Ошибка компиляции:\n$errorStream")
+            throw CompilationException("compilation error:\n$errorStream")
         }
 
-        println("finally compiled")
         return "$tempDir|Solution$uuid"
     }
 
@@ -43,17 +42,14 @@ class CppExecutor : LanguageExecutor {
         testId: String,
         expectedOutput: String
     ): TestCaseResult {
-        println("Начало выполнения тест-кейса: testId = $testId, input = $input, expectedOutput = $expectedOutput")
+        println("test case: testId = $testId, input = $input, expectedOutput = $expectedOutput")
 
         val (tempDirPath, executableName) = compilationResult.split("|")
         val tempDir = Paths.get(tempDirPath)
-        println("Используется временная директория: $tempDir")
-
         val processBuilder = ProcessBuilder("./$executableName")
         processBuilder.directory(tempDir.toFile())
         processBuilder.redirectErrorStream(true)
 
-        println("Запуск программы...")
         val process = processBuilder.start()
 
         process.outputStream.bufferedWriter().use { writer ->
@@ -61,18 +57,15 @@ class CppExecutor : LanguageExecutor {
             writer.newLine()
             writer.flush()
         }
-        println("Входные данные переданы в программу.")
 
         val output = process.inputStream.bufferedReader().readText().trim()
         val exitCode = process.waitFor()
-        println("Вывод программы: $output")
 
         val success = exitCode == 0 && output == expectedOutput.trim()
-        println("Результат выполнения: success = $success")
 
         val errorOutput = if (exitCode != 0) {
             val error = process.errorStream.bufferedReader().readText()
-            println("Ошибка выполнения: $error")
+            println("Error: $error")
             error
         } else {
             null

@@ -9,7 +9,7 @@ import java.util.concurrent.*
 
 class CheckerServiceImpl(val testRepository: TestCasesRepository) : CheckerService {
     private val executorFactory = LanguageExecutorFactory()
-    private val timeout = 3L // Таймаут выполнения в секундах
+    private val timeout = 3L
 
     override suspend fun checkTask(subRequest: SubmissionRequest): TestResult {
         val executor = executorFactory.build(subRequest.language)

@@ -44,11 +44,10 @@ class JavaExecutor : LanguageExecutor {
         testId: String,
         expectedOutput: String
     ): TestCaseResult {
-        println("Начало выполнения тест-кейса: testId = $testId, input = $input, expectedOutput = $expectedOutput")
+        println("test case: testId = $testId, input = $input, expectedOutput = $expectedOutput")
 
         val (tempDirPath, className) = compilationResult.split("|")
         val tempDir = Paths.get(tempDirPath)
-        println("Используется временная директория: $tempDir")
 
         val processBuilder = ProcessBuilder("java", "-cp", tempDir.toString(), className)
         processBuilder.directory(tempDir.toFile())
@@ -66,14 +65,13 @@ class JavaExecutor : LanguageExecutor {
 
         val output = process.inputStream.bufferedReader().readText().trim()
         val exitCode = process.waitFor()
-        println("Вывод программы: $output")
 
         val success = exitCode == 0 && output == expectedOutput.trim()
-        println("Результат выполнения: success = $success")
+        println("success = $success")
 
         val errorOutput = if (exitCode != 0) {
             val error = process.errorStream.bufferedReader().readText()
-            println("Ошибка выполнения: $error")
+            println("error: $error")
             error
         } else {
             null
