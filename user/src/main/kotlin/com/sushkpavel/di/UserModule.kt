@@ -16,8 +16,9 @@ val userModule = module {
     }
     single<Database> {
         Database.connect(
-            url = "jdbc:mysql://127.0.0.1:3306/ktor_task_tester",
-            user = "root",
+//            url = "jdbc:mysql://db:3306/ktor_task_tester",
+            url = "jdbc:mysql://192.168.1.7:3306/ktor_task_tester",
+            user = "service",
             driver = "com.mysql.cj.jdbc.Driver",
             password = "3277122228",
         )

@@ -44,7 +44,7 @@ class TestTaskRepositoryImpl(private val client: HttpClient, database: Database)
     }
 
     override suspend fun testTask(submissionRequest: SubmissionRequest): TestResultDTO {
-        val response = client.post("http://localhost:8084/check-solution") {
+        val response = client.post("http://checker-service:8084/check-solution") {
             contentType(ContentType.Application.Json)
             setBody(submissionRequest)
         }.bodyAsText()
