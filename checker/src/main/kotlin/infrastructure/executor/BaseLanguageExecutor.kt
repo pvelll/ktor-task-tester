@@ -2,6 +2,7 @@ package com.sushkpavel.infrastructure.executor
 
 import com.sushkpavel.domain.executor.LanguageExecutor
 import com.sushkpavel.domain.model.TestCaseResult
+import com.sushkpavel.infrastructure.executor.error.ExecutionException
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths

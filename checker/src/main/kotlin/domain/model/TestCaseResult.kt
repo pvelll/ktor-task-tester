@@ -9,8 +9,8 @@ data class TestCaseResult(
     val actualResult: String,
     val expectedResult: String? = null,
     val error: String? = null
-){
-    companion object{
+) {
+    companion object {
         fun timeout(testId: String, expected: String, timeout: Long) =
             TestCaseResult(
                 testId = testId,
@@ -19,5 +19,20 @@ data class TestCaseResult(
                 expectedResult = expected.trim(),
                 error = "Execution timeout"
             )
+
+        fun exception(testId: String, expected: String, e: Exception) =
+            TestCaseResult(
+                testId = testId,
+                success = false,
+                actualResult = "Error ${e.message}s",
+                expectedResult = expected.trim(),
+                error = "Execution failed with an exception: ${e.message}"
+            )
+        fun TestCaseResult.truncateError(maxLength: Int): TestCaseResult {
+            return this.copy(
+                actualResult = actualResult.take(maxLength),
+                error = error?.take(maxLength)
+            )
+        }
     }
 }

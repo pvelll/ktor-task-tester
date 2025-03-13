@@ -1,10 +1,10 @@
 package com.sushkpavel.infrastructure.executor.factory
 
 import com.sushkpavel.domain.executor.LanguageExecutor
-import com.sushkpavel.infrastructure.executor.CppExecutor
-import com.sushkpavel.infrastructure.executor.JavaExecutor
-import com.sushkpavel.infrastructure.executor.KotlinExecutor
-import com.sushkpavel.infrastructure.executor.PythonExecutor
+import com.sushkpavel.infrastructure.executor.impl.CppExecutor
+import com.sushkpavel.infrastructure.executor.impl.JavaExecutor
+import com.sushkpavel.infrastructure.executor.impl.KotlinExecutor
+import com.sushkpavel.infrastructure.executor.impl.PythonExecutor
 
 class LanguageExecutorFactory {
     private val executors = mapOf(

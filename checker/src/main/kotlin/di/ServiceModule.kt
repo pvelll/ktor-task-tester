@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 val  serviceModule = module {
     single<CheckerService> {
-        CheckerServiceImpl(get())
+        CheckerServiceImpl(get(), get(),get(),get())
     }
 }

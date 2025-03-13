@@ -2,7 +2,6 @@ package com.sushkpavel.domain.model
 
 import kotlinx.serialization.Serializable
 
-class CompilationException(message: String) : Exception(message)
 
 
 @Serializable

@@ -1,12 +1,7 @@
-package com.sushkpavel.infrastructure.executor
+package com.sushkpavel.infrastructure.executor.impl
 
-import com.sushkpavel.domain.executor.LanguageExecutor
-import com.sushkpavel.domain.model.*
-import java.io.*
-import java.nio.file.Files
+import com.sushkpavel.infrastructure.executor.BaseLanguageExecutor
 import java.nio.file.Path
-import java.nio.file.Paths
-import java.util.*
 
 class KotlinExecutor : BaseLanguageExecutor() {
     override val languageName = "kotlin"

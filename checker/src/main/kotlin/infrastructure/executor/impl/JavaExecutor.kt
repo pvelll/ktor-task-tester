@@ -1,5 +1,6 @@
-package com.sushkpavel.infrastructure.executor
+package com.sushkpavel.infrastructure.executor.impl
 
+import com.sushkpavel.infrastructure.executor.BaseLanguageExecutor
 import java.nio.file.Path
 
 class JavaExecutor : BaseLanguageExecutor() {

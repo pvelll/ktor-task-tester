@@ -1,11 +1,8 @@
-package com.sushkpavel.infrastructure.executor
+package com.sushkpavel.infrastructure.executor.impl
 
-import com.sushkpavel.domain.executor.LanguageExecutor
-import com.sushkpavel.domain.model.TestCaseResult
-import java.io.*
+import com.sushkpavel.infrastructure.executor.BaseLanguageExecutor
 import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.Paths
 import java.util.*
 
 class PythonExecutor : BaseLanguageExecutor() {
