@@ -8,74 +8,21 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.*
 
-class KotlinExecutor : LanguageExecutor {
+class KotlinExecutor : BaseLanguageExecutor() {
+    override val languageName = "kotlin"
+    override val sourceExtension = "kt"
+    override val needCompilation = true
 
-    override fun compile(code: String): String {
-        val uuid = UUID.randomUUID().toString().replace("-", "")
-        val className = "Solution$uuid"
-        val sourceFileName = "$className.kt"
+    override fun preprocessCode(code: String, className: String) =
+        code.replace("class Solution", "class $className")
 
-        val tempDir = Files.createTempDirectory("kotlin_executor")
-        println("dir: ${tempDir.toAbsolutePath()}")
-
-        val sourceFilePath = tempDir.resolve(sourceFileName)
-
-        val modifiedCode = code.replace("class Solution", "class $className")
-        Files.write(sourceFilePath, modifiedCode.toByteArray())
-
-        val processBuilder = ProcessBuilder("kotlinc", sourceFileName, "-include-runtime", "-d", "$className.jar")
-        processBuilder.directory(tempDir.toFile())
-        val process = processBuilder.start()
-        val exitCode = process.waitFor()
-
-        if (exitCode != 0) {
-            val errorStream = process.errorStream.bufferedReader().readText()
-            println("compilation error: $errorStream")
-            tempDir.toFile().deleteRecursively()
-            throw CompilationException("compilation error:\n$errorStream")
-        }
-        return "$tempDir|$className"
+    override val compileCommand = { source: String, dir: Path ->
+        val jarName = "${source.removeSuffix(".kt")}.jar"
+        println("Compiling to: ${dir.resolve(jarName)}")
+        listOf("kotlinc", source, "-include-runtime", "-d", jarName)
     }
 
-    override fun execute(
-        compilationResult: String,
-        input: String,
-        testId: String,
-        expectedOutput: String
-    ): TestCaseResult {
-        println("test case: testId = $testId, input = $input, expectedOutput = $expectedOutput")
-
-        val (tempDirPath, className) = compilationResult.split("|")
-        val tempDir = Paths.get(tempDirPath)
-        val processBuilder = ProcessBuilder("java", "-jar", "$className.jar")
-        processBuilder.directory(tempDir.toFile())
-        processBuilder.redirectErrorStream(true)
-        val process = processBuilder.start()
-
-        process.outputStream.bufferedWriter().use { writer ->
-            writer.write(input)
-            writer.newLine()
-            writer.flush()
-        }
-        val output = process.inputStream.bufferedReader().readText().trim()
-        val exitCode = process.waitFor()
-        val success = exitCode == 0 && output == expectedOutput.trim()
-
-        val errorOutput = if (exitCode != 0) {
-            val error = process.errorStream.bufferedReader().readText()
-            println("error: $error")
-            error
-        } else {
-            null
-        }
-
-
-        return TestCaseResult(
-            testId = testId,
-            success = success,
-            actualResult = output,
-            expectedResult = expectedOutput.trim(),
-            error = errorOutput
-        )
+    override val executeCommand = { className: String, dir: Path ->
+        listOf("java", "-jar", dir.resolve("$className.jar").toString())
     }
 }

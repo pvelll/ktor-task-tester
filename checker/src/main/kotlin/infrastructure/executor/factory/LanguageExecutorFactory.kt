@@ -7,16 +7,15 @@ import com.sushkpavel.infrastructure.executor.KotlinExecutor
 import com.sushkpavel.infrastructure.executor.PythonExecutor
 
 class LanguageExecutorFactory {
-    fun build(language : String) : LanguageExecutor? {
-        return when(language){
-            Languages.CPP.lang -> CppExecutor()
-            Languages.JAVA.toString().lowercase() -> JavaExecutor()
-            Languages.KOTLIN.lang -> KotlinExecutor()
-            Languages.PYTHON.lang -> PythonExecutor()
-            else -> null
+    private val executors = mapOf(
+        Languages.CPP.lang to ::CppExecutor,
+        Languages.JAVA.lang to ::JavaExecutor,
+        Languages.KOTLIN.lang to ::KotlinExecutor,
+        Languages.PYTHON.lang to ::PythonExecutor
+    )
 
-        }
-
+    fun build(language: String): LanguageExecutor {
+        return executors[language]?.invoke() ?: throw IllegalArgumentException("Unsupported language: $language")
     }
 }
 

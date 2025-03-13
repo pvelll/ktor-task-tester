@@ -1,88 +1,20 @@
 package com.sushkpavel.infrastructure.executor
 
-import com.sushkpavel.domain.executor.LanguageExecutor
-import com.sushkpavel.domain.model.*
-import java.io.*
-import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.Paths
-import java.util.*
-class JavaExecutor : LanguageExecutor {
 
-    override fun compile(code: String): String {
-        val uuid = UUID.randomUUID().toString().replace("-", "")
-        val className = "Solution$uuid"
-        val sourceFileName = "$className.java"
+class JavaExecutor : BaseLanguageExecutor() {
+    override val languageName = "java"
+    override val sourceExtension = "java"
+    override val needCompilation = true
 
-        val tempDir = Files.createTempDirectory("java_executor")
-        println("temp dir: ${tempDir.toAbsolutePath()}")
-        val sourceFilePath = tempDir.resolve(sourceFileName)
+    override fun preprocessCode(code: String, className: String) =
+        code.replace("public class Solution", "public class $className")
 
-        val modifiedCode = code.replace("public class Solution", "public class $className")
-        Files.write(sourceFilePath, modifiedCode.toByteArray())
-        println("wrote code in file: $sourceFilePath")
-
-        val processBuilder = ProcessBuilder("javac", sourceFileName)
-        processBuilder.directory(tempDir.toFile())
-        val process = processBuilder.start()
-        val exitCode = process.waitFor()
-
-        if (exitCode != 0) {
-            val errorStream = process.errorStream.bufferedReader().readText()
-            println("compilation error: $errorStream")
-            tempDir.toFile().deleteRecursively()
-            throw CompilationException("Ошибка компиляции:\n$errorStream")
-        }
-
-        println("finally compiled")
-        return "$tempDir|$className"
+    override val compileCommand = { source: String, _: Path ->
+        listOf("javac", source)
     }
 
-    override fun execute(
-        compilationResult: String,
-        input: String,
-        testId: String,
-        expectedOutput: String
-    ): TestCaseResult {
-        println("test case: testId = $testId, input = $input, expectedOutput = $expectedOutput")
-
-        val (tempDirPath, className) = compilationResult.split("|")
-        val tempDir = Paths.get(tempDirPath)
-
-        val processBuilder = ProcessBuilder("java", "-cp", tempDir.toString(), className)
-        processBuilder.directory(tempDir.toFile())
-        processBuilder.redirectErrorStream(true)
-
-        println("Запуск программы...")
-        val process = processBuilder.start()
-
-        process.outputStream.bufferedWriter().use { writer ->
-            writer.write(input)
-            writer.newLine()
-            writer.flush()
-        }
-        println("Входные данные переданы в программу.")
-
-        val output = process.inputStream.bufferedReader().readText().trim()
-        val exitCode = process.waitFor()
-
-        val success = exitCode == 0 && output == expectedOutput.trim()
-        println("success = $success")
-
-        val errorOutput = if (exitCode != 0) {
-            val error = process.errorStream.bufferedReader().readText()
-            println("error: $error")
-            error
-        } else {
-            null
-        }
-
-        return TestCaseResult(
-            testId = testId,
-            success = success,
-            actualResult = output,
-            expectedResult = expectedOutput.trim(),
-            error = errorOutput
-        )
+    override val executeCommand = { className: String, dir: Path ->
+        listOf("java", "-cp", dir.toString(), className)
     }
 }
