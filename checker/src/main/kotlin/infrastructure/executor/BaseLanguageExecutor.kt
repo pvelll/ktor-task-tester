@@ -22,7 +22,6 @@ abstract class BaseLanguageExecutor : LanguageExecutor {
         val uuid = UUID.randomUUID().toString().replace("-", "")
         val className = "Solution$uuid"
         val sourceFileName = "$className.$sourceExtension"
-
         val tempDir = Files.createTempDirectory("${languageName}_executor").apply {
             toFile().deleteOnExit()
         }
