@@ -6,6 +6,6 @@ import org.koin.ktor.plugin.Koin
 
 fun Application.configureKoin() {
     install(Koin) {
-        modules(serviceModule)
+        modules(serviceModule, repositoryModule)
     }
 }

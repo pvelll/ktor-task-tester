@@ -11,7 +11,7 @@ data class Task (
     val title : String,
     val description : String,
     val difficulty : Difficulty,
-    val examples : List<String>,
+    val examples : String,
     @Serializable(with = InstantSerializer::class)
     val createdAt : Instant,
     @Serializable(with = InstantSerializer::class)
