@@ -3,16 +3,12 @@ package com.sushkpavel.infrastructure.repository
 import com.sushkpavel.com.sushkpavel.domain.model.Difficulty
 import com.sushkpavel.domain.model.Task
 import com.sushkpavel.domain.repository.TaskRepository
-import com.sushkpavel.infrastructure.dto.TaskDTO
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.Database
 import com.sushkpavel.domain.repository.TaskRepository.Tasks
-import com.sushkpavel.domain.repository.TaskRepository.Tasks.difficulty
 import kotlinx.coroutines.Dispatchers
-import org.jetbrains.exposed.sql.Expression
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.SqlExpressionBuilder
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
