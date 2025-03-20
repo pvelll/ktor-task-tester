@@ -5,5 +5,5 @@ import com.sushkpavel.infrastructure.service.TaskServiceImpl
 import org.koin.dsl.module
 
 val serviceModule = module{
-    single<TaskService> { TaskServiceImpl() }
+    single<TaskService> { TaskServiceImpl(get()) }
 }

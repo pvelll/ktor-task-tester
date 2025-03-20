@@ -6,9 +6,9 @@ import com.sushkpavel.infrastructure.dto.TaskDTO
 
 
 interface TaskService {
-    suspend fun createTask(task: TaskDTO)
-    suspend fun deleteTask(taskDTO: TaskDTO)
-    suspend fun updateTask(taskDTO: TaskDTO)
-    suspend fun getTask(taskId : Long): Task?
+    suspend fun createTask(taskDTO: TaskDTO): Task
+    suspend fun deleteTask(taskId: Long): Boolean
+    suspend fun updateTask(taskDTO: TaskDTO): Task
+    suspend fun getTask(taskId: Long): Task?
     suspend fun getTask(difficulty: Difficulty): Task?
 }

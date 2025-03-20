@@ -2,15 +2,14 @@ package com.sushkpavel.domain.repository
 
 import com.sushkpavel.com.sushkpavel.domain.model.Difficulty
 import com.sushkpavel.domain.model.Task
-import com.sushkpavel.infrastructure.dto.TaskDTO
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.timestamp
 
 interface TaskRepository {
-    suspend fun createTask(task: TaskDTO)
-    suspend fun deleteTask(taskId: Long) : Boolean
-    suspend fun updateTask(taskDTO: TaskDTO)
-    suspend fun getTask(taskId : Long): Task?
+    suspend fun createTask(task: Task): Task
+    suspend fun deleteTask(taskId: Long): Boolean
+    suspend fun updateTask(task: Task): Task
+    suspend fun getTask(taskId: Long): Task?
     suspend fun getTask(difficulty: Difficulty): Task?
 
     object Tasks : Table(){
