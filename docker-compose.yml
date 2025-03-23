@@ -71,6 +71,18 @@ services:
       app-network:
         ipv4_address: 172.20.0.6
 
+  task-service:
+    build:
+      context: ./task
+      dockerfile: Dockerfile
+    ports:
+      - "8086:8086"
+    volumes:
+      - shared-data:/app/shared
+    networks:
+      app-network:
+        ipv4_address: 172.20.0.7
+
 networks:
   app-network:
     driver: bridge

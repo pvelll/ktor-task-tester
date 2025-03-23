@@ -29,6 +29,7 @@ class UserRepositoryImpl(database: Database) : UserRepository {
             Users.insert {
                 it[username] = user.username
                 it[email] = user.email
+                it[role] = user.role!!.name
                 it[passwordHash] = user.passwordHash
                 it[createdAt] = Instant.now()
                 it[updatedAt] = Instant.now()
@@ -74,10 +75,11 @@ class UserRepositoryImpl(database: Database) : UserRepository {
     }
 
     override suspend fun updateRole(id: Int, role: Role) = dbQuery {
-        Users.update({ Users.userId eq id }) {
-            it[Users.role] = role.name
-            it[updatedAt] = Instant.now()
-        }
+        TODO()
+    //        Users.update({ Users.userId eq id }) {
+//            it[role] = role.name
+//            it[updatedAt] = Instant.now()
+//        }
     }
     private fun toUser(row: ResultRow): User {
         return User(

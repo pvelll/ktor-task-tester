@@ -4,6 +4,7 @@ import com.sun.org.slf4j.internal.LoggerFactory
 import com.sushkpavel.domain.dto.Credentials
 import com.sushkpavel.domain.dto.NotifyMessageDTO
 import com.sushkpavel.domain.dto.UserDTO
+import com.sushkpavel.domain.model.Role
 import com.sushkpavel.domain.service.UserService
 import com.sushkpavel.utils.getTokenFromHeader
 import io.ktor.http.*
@@ -20,6 +21,12 @@ fun Application.configureLoginController() {
     routing {
         post("/register") {
             val user = call.receive<UserDTO>()
+            val adminKey = call.request.headers["X-admin-key"]
+            val isAdminRegistration = adminKey == "hardcodeAdminKey"
+            if(user.role == Role.ADMIN && !isAdminRegistration) {
+                call.respond("FUCK YOU")
+                return@post
+            }
             val response = userService.register(user)?.let { _ ->
                 NotifyMessageDTO(message = "Created", code = HttpStatusCode.Created.value)
             } ?: NotifyMessageDTO(message = "Unable to register", code = HttpStatusCode.BadRequest.value)
