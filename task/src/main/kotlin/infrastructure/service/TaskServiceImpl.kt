@@ -1,6 +1,6 @@
 package com.sushkpavel.infrastructure.service
 
-import com.sushkpavel.com.sushkpavel.domain.model.Difficulty
+import com.sushkpavel.domain.model.Difficulty
 import com.sushkpavel.domain.model.Task
 import com.sushkpavel.domain.repository.TaskRepository
 import com.sushkpavel.domain.service.TaskService

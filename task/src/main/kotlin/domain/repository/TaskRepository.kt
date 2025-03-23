@@ -1,6 +1,6 @@
 package com.sushkpavel.domain.repository
 
-import com.sushkpavel.com.sushkpavel.domain.model.Difficulty
+import com.sushkpavel.domain.model.Difficulty
 import com.sushkpavel.domain.model.Task
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.timestamp

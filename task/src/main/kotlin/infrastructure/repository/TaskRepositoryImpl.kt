@@ -1,6 +1,6 @@
 package com.sushkpavel.infrastructure.repository
 
-import com.sushkpavel.com.sushkpavel.domain.model.Difficulty
+import com.sushkpavel.domain.model.Difficulty
 import com.sushkpavel.domain.model.Task
 import com.sushkpavel.domain.repository.TaskRepository
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq

@@ -1,6 +1,5 @@
 package com.sushkpavel.domain.model
 
-import com.sushkpavel.com.sushkpavel.domain.model.Difficulty
 import com.sushkpavel.utils.InstantSerializer
 import kotlinx.serialization.Serializable
 import java.time.Instant
