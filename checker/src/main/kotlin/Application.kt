@@ -3,6 +3,7 @@ package com.sushkpavel
 import com.sushkpavel.controller.configureCheckerController
 import com.sushkpavel.di.configureKoin
 import com.sushkpavel.plugins.configureSerialization
+import com.sushkpavel.plugins.security.configureSecurity
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
 
@@ -13,5 +14,7 @@ fun main(args: Array<String>) {
 fun Application.module() {
     configureSerialization()
     configureKoin()
+    configureSecurity()
     configureCheckerController()
+
 }
