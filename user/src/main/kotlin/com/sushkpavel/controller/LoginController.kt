@@ -41,9 +41,10 @@ fun Application.configureLoginController() {
                 call.respond(HttpStatusCode.OK, token)
             } else {
                 call.respond(
+                    HttpStatusCode.Unauthorized,
                     NotifyMessageDTO(
-                        message = HttpStatusCode.BadRequest.toString(),
-                        code = HttpStatusCode.BadRequest.value
+                        message = "Wrong password or login",
+                        code = HttpStatusCode.Unauthorized.value
                     )
                 )
             }
@@ -55,6 +56,7 @@ fun Application.configureLoginController() {
                     call.respond(NotifyMessageDTO(message = "Logged out successfully", code = HttpStatusCode.OK.value))
                 } else {
                     call.respond(
+                        HttpStatusCode.Unauthorized,
                         NotifyMessageDTO(
                             message = HttpStatusCode.Unauthorized.toString(),
                             code = HttpStatusCode.Unauthorized.value

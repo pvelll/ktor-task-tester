@@ -1,5 +1,6 @@
 package com.sushkpavel.controller
 
+import com.sushkpavel.domain.dto.NotifyMessageDTO
 import com.sushkpavel.domain.dto.SubmissionRequest
 import com.sushkpavel.domain.model.SolutionSubmission
 import com.sushkpavel.domain.service.SubmissionService
@@ -21,16 +22,23 @@ fun Application.configureSubmissionController() {
                 post {
                     val submissionRequest = call.receive<SubmissionRequest>()
                     val principal = call.principal<UserPrincipal>() ?: run {
-                        call.respond(HttpStatusCode.Unauthorized, "User is not logged in")
+                        call.respond(
+                            HttpStatusCode.Unauthorized, NotifyMessageDTO(
+                                "User is not logged in",
+                                HttpStatusCode.Unauthorized.value
+                            )
+                        )
                         return@post
                     }
-                    val id = solutionService.saveSubmission(SolutionSubmission(
-                        userId = principal.userId,
-                        taskId = submissionRequest.taskId,
-                        code = submissionRequest.code,
-                        language = submissionRequest.language,
-                        createdAt = Instant.now()
-                    ))
+                    val id = solutionService.saveSubmission(
+                        SolutionSubmission(
+                            userId = principal.userId,
+                            taskId = submissionRequest.taskId,
+                            code = submissionRequest.code,
+                            language = submissionRequest.language,
+                            createdAt = Instant.now()
+                        )
+                    )
                     val submission = SolutionSubmission(
                         id = id,
                         userId = principal.userId,

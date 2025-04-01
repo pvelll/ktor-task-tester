@@ -1,6 +1,7 @@
 package com.sushkpavel.controller
 
 import com.sushkpavel.domain.model.Difficulty
+import com.sushkpavel.domain.model.NotifyMessageDTO
 import com.sushkpavel.domain.model.Task
 import com.sushkpavel.domain.service.TaskService
 import com.sushkpavel.infrastructure.dto.TaskDTO
@@ -27,19 +28,28 @@ fun Application.configureTaskController() {
             get {
                 val taskId = call.parameters["taskId"]?.toLongOrNull()
                 val difficultyStr = call.parameters["difficulty"]?.uppercase()
-
                 val task = when {
                     taskId != null -> taskService.getTask(taskId)
                     difficultyStr != null -> {
                         try {
                             taskService.getTask(Difficulty.valueOf(difficultyStr))
                         } catch (e: IllegalArgumentException) {
-                            call.respond(HttpStatusCode.BadRequest, "Invalid difficulty value")
+                            call.respond(
+                                HttpStatusCode.BadRequest,
+                                NotifyMessageDTO("Invalid difficulty value", HttpStatusCode.BadRequest.value)
+                            )
                             return@get
                         }
                     }
+
                     else -> {
-                        call.respond(HttpStatusCode.BadRequest, "Missing parameters: taskId or difficulty")
+                        call.respond(
+                            HttpStatusCode.BadRequest,
+                            NotifyMessageDTO(
+                                "Missing parameters: taskId or difficulty",
+                                HttpStatusCode.BadRequest.value
+                            )
+                        )
                         return@get
                     }
                 }
@@ -47,7 +57,10 @@ fun Application.configureTaskController() {
                 if (task != null) {
                     call.respond(task)
                 } else {
-                    call.respond(HttpStatusCode.NotFound)
+                    call.respond(
+                        HttpStatusCode.NotFound,
+                        NotifyMessageDTO("Task not found", HttpStatusCode.NotFound.value)
+                    )
                 }
             }
             authenticate {
@@ -57,11 +70,14 @@ fun Application.configureTaskController() {
                         val createdTask = taskService.createTask(taskDTO)
                         call.respond(HttpStatusCode.Created, createdTask)
                     } catch (e: ContentTransformationException) {
-                        call.respond(HttpStatusCode.BadRequest, "Invalid task format")
+                        call.respond(
+                            HttpStatusCode.BadRequest,
+                            NotifyMessageDTO("Invalid task format", HttpStatusCode.BadRequest.value)
+                        )
                     } catch (e: Exception) {
                         call.respond(
                             HttpStatusCode.InternalServerError,
-                            "Error creating task: ${e.message}"
+                            NotifyMessageDTO(e.message ?: "Unknown error", HttpStatusCode.InternalServerError.value)
                         )
                     }
                 }
@@ -70,7 +86,12 @@ fun Application.configureTaskController() {
                     try {
                         val taskDTO = call.receive<TaskDTO>()
                         if (taskDTO.id == null) {
-                            call.respond(HttpStatusCode.BadRequest, "Task ID is required for update")
+                            call.respond(
+                                HttpStatusCode.BadRequest, NotifyMessageDTO(
+                                    "Task ID is required for update",
+                                    HttpStatusCode.BadRequest.value
+                                )
+                            )
                             return@put
                         }
 
@@ -78,11 +99,20 @@ fun Application.configureTaskController() {
                             call.respond(it)
                         } ?: call.respond(HttpStatusCode.NotFound)
                     } catch (e: ContentTransformationException) {
-                        call.respond(HttpStatusCode.BadRequest, "Invalid task format")
+                        call.respond(
+                            HttpStatusCode.BadRequest, NotifyMessageDTO(
+                                "Invalid task format",
+                                HttpStatusCode.BadRequest.value
+                            )
+                        )
                     } catch (e: Exception) {
                         call.respond(
                             HttpStatusCode.InternalServerError,
-                            "Error updating task: ${e.message}"
+                            NotifyMessageDTO(
+                                "Error updating task: ${e.message}",
+                                HttpStatusCode.BadRequest.value
+                            )
+
                         )
                     }
                 }
@@ -91,14 +121,22 @@ fun Application.configureTaskController() {
                     val taskId = call.parameters["taskId"]?.toLongOrNull()
                         ?: return@delete call.respond(
                             HttpStatusCode.BadRequest,
-                            "Task ID parameter is required"
+                            NotifyMessageDTO(
+                                "Task ID parameter is required",
+                                HttpStatusCode.BadRequest.value
+                            )
+
+
                         )
 
                     val isDeleted = taskService.deleteTask(taskId)
                     if (isDeleted) {
                         call.respond(HttpStatusCode.OK)
                     } else {
-                        call.respond(HttpStatusCode.NotFound)
+                        call.respond(
+                            HttpStatusCode.NotFound,
+                            NotifyMessageDTO("Task not found", HttpStatusCode.NotFound.value)
+                        )
                     }
                 }
             }
