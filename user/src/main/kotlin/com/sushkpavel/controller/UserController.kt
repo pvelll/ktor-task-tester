@@ -55,7 +55,13 @@ fun Application.configureUserController() {
                 if (principal.role == Role.ADMIN || principal.userId == id) {
                     val user = call.receive<User>()
                     userService.update(id, user)
-                    call.respond(HttpStatusCode.OK)
+                    call.respond(
+                        HttpStatusCode.OK,
+                        message = NotifyMessageDTO(
+                            message = HttpStatusCode.OK.description,
+                            code = HttpStatusCode.OK.value
+                        )
+                    )
                 } else {
                     call.respond(
                         status = HttpStatusCode.Forbidden,
@@ -73,7 +79,13 @@ fun Application.configureUserController() {
 
                 if (principal.role == Role.ADMIN || principal.userId == id) {
                     userService.delete(id)
-                    call.respond(HttpStatusCode.OK)
+                    call.respond(
+                        HttpStatusCode.OK,
+                        message = NotifyMessageDTO(
+                            message = HttpStatusCode.OK.description,
+                            code = HttpStatusCode.OK.value
+                        )
+                    )
                 } else {
                     call.respond(
                         status = HttpStatusCode.Forbidden,
