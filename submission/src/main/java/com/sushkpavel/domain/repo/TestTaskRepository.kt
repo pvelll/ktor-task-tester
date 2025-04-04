@@ -1,0 +1,13 @@
+package com.sushkpavel.domain.repo
+
+import com.sushkpavel.domain.dto.SubmissionRequest
+import com.sushkpavel.domain.dto.TestResultDTO
+import com.sushkpavel.domain.model.SolutionSubmission
+import com.sushkpavel.domain.model.TestResult
+
+interface TestTaskRepository {
+    suspend fun testTask(submissionRequest: SubmissionRequest) : TestResultDTO
+    suspend fun saveResult(testResultDTO: TestResultDTO, submission: SolutionSubmission)
+    suspend fun getResultsForTask(userId : Int, taskId : Int) : List<TestResult?>
+    suspend fun getResultForTask(userId : Int, submissionId : Int) : TestResult?
+}

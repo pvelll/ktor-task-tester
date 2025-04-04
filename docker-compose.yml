@@ -1,0 +1,96 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: 3277122228
+      MYSQL_DATABASE: ktor_task_tester
+      MYSQL_USER: service
+      MYSQL_PASSWORD: 3277122228
+      MYSQL_BIND_ADDRESS: 0.0.0.0
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      app-network:
+        ipv4_address: 172.20.0.2
+
+  api-service:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    volumes:
+      - shared-data:/app/shared
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      app-network:
+        ipv4_address: 172.20.0.3
+
+  submission-service:
+    build:
+      context: ./submission
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    volumes:
+      - shared-data:/app/shared
+    networks:
+      app-network:
+        ipv4_address: 172.20.0.4
+
+  checker-service:
+    build:
+      context: ./checker
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8084:8084"
+    volumes:
+      - shared-data:/app/shared
+    networks:
+      app-network:
+        ipv4_address: 172.20.0.5
+
+  user-service:
+    build:
+      context: ./user
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
+    volumes:
+      - shared-data:/app/shared
+    networks:
+      app-network:
+        ipv4_address: 172.20.0.6
+
+  task-service:
+    build:
+      context: ./task
+      dockerfile: Dockerfile
+    ports:
+      - "8086:8086"
+    volumes:
+      - shared-data:/app/shared
+    networks:
+      app-network:
+        ipv4_address: 172.20.0.7
+
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
+
+volumes:
+  shared-data:
+  mysql_data:
