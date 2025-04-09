@@ -7,33 +7,38 @@ import com.sushkpavel.domain.model.User
 import com.sushkpavel.domain.repository.TokenRepository
 import com.sushkpavel.domain.repository.UserRepository
 import com.sushkpavel.domain.service.UserService
+import io.ktor.http.HttpStatusCode
 
-class UserServiceImpl(private val userRepository: UserRepository, private val tokenRepository: TokenRepository) : UserService {
+class UserServiceImpl(private val userRepository: UserRepository, private val tokenRepository: TokenRepository) :
+    UserService {
     override suspend fun login(credentials: Credentials): Token? {
         val user = userRepository.getUserByEmail(credentials.email)
-        return if(user!= null && credentials.passwordHash == user.passwordHash){
+        return if (user != null && credentials.passwordHash == user.passwordHash) {
             tokenRepository.generateToken(user)
         } else {
             null
         }
     }
 
-    override suspend fun logout(tokenValue: String)  : Boolean{
+    override suspend fun logout(tokenValue: String): Boolean {
         val token = tokenRepository.getTokenByValue(tokenValue)
-        return if(token != null) {
+        return if (token != null) {
             tokenRepository.deleteToken(token.tokenId)
-        }
-        else {
+        } else {
             false
         }
     }
 
     override suspend fun register(user: UserDTO): Int? {
-        return if(getUserByEmail(user.email) == null) {
-            userRepository.create(user)
-        }else {
-            null
-        }
+        return (if (getUserByEmail(user.email) == null) {
+            if (userRepository.create(user) != HttpStatusCode.Conflict.value) {
+                HttpStatusCode.Created.value
+            } else {
+                HttpStatusCode.Conflict.value
+            }
+        } else {
+            HttpStatusCode.Conflict.value
+        }) as Int?
     }
 
     override suspend fun getById(id: Int): User? {
