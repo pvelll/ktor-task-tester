@@ -5,7 +5,7 @@ import com.sushkpavel.domain.model.Role
 import com.sushkpavel.domain.model.User
 import com.sushkpavel.domain.repository.UserRepository
 import org.jetbrains.exposed.sql.transactions.transaction
-import com.sushkpavel.domain.repository.UserRepository.Users
+import com.sushkpavel.tasktester.tables.Users
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
