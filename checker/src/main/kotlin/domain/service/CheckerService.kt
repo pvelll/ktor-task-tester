@@ -7,7 +7,7 @@ import com.sushkpavel.domain.model.TestResult
 
 interface CheckerService {
     suspend fun checkTask(subRequest : SubmissionRequest) : TestResult
-    suspend fun getTestCases(taskId: Int): List<TestCase>
+    suspend fun getTestCases(taskId: Long): List<TestCase>
 
     suspend fun postTestCases(testCaseDTO: TestCaseDTO) : Int
 }

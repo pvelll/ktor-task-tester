@@ -6,30 +6,15 @@ import com.sushkpavel.domain.model.TestCaseDTO
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
-import org.jetbrains.exposed.sql.javatime.timestamp
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
+import tables.TestCases
 import java.time.Instant
 
 class TestCasesRepositoryImpl(database: Database) : TestCasesRepository {
-    object TestCases : Table() {
-        val id = integer("id").autoIncrement()
-        val taskId = integer("task_id")
-        val input = text("input")
-        val expOutput = text("expected_output")
-        val createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp)
 
-        override val primaryKey = PrimaryKey(id)
-
-        init {
-            uniqueIndex(id)
-        }
-
-    }
 
     init {
         transaction(database) {
@@ -38,7 +23,7 @@ class TestCasesRepositoryImpl(database: Database) : TestCasesRepository {
     }
 
 
-    override suspend fun getTestCasesByTaskId(taskId: Int): List<TestCase> = dbQuery {
+    override suspend fun getTestCasesByTaskId(taskId: Long): List<TestCase> = dbQuery {
 
         TestCases.selectAll().where { TestCases.taskId eq taskId }
             .map {

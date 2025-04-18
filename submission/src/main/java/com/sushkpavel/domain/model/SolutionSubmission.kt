@@ -9,7 +9,7 @@ import java.time.Instant
 data class SolutionSubmission(
     val id: Int? = null,
     val userId: Int,
-    val taskId: Int,
+    val taskId: Long,
     val code: String,
     val language : String,
     @Serializable(with = InstantSerializer::class)

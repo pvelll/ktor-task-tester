@@ -3,6 +3,8 @@ package com.sushkpavel.infrastructure.executor
 import com.sushkpavel.domain.executor.LanguageExecutor
 import com.sushkpavel.domain.model.TestCaseResult
 import com.sushkpavel.infrastructure.executor.error.ExecutionException
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -14,7 +16,7 @@ abstract class BaseLanguageExecutor : LanguageExecutor {
     protected abstract val compileCommand: (String, Path) -> List<String>
     protected abstract val executeCommand: (String, Path) -> List<String>
     protected open val needCompilation: Boolean = true
-
+    val logger: Logger = LoggerFactory.getLogger(this.javaClass)
     protected open fun preprocessCode(code: String, className: String): String = code
     protected open fun postCompile(tempDir: Path, className: String) {}
 
@@ -88,7 +90,7 @@ abstract class BaseLanguageExecutor : LanguageExecutor {
         }
 
         val output = process.inputStream.bufferedReader().readText()
-        println("Process output: $output")
+        logger.debug("EXECUTING OUTPUT: $output")
         val exitCode = process.waitFor()
 
         if (exitCode != 0) {

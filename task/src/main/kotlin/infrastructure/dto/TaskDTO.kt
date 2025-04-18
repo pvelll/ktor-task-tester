@@ -1,7 +1,7 @@
 package com.sushkpavel.infrastructure.dto
 
-import com.sushkpavel.domain.model.Difficulty
 import com.sushkpavel.domain.model.Task
+import com.sushkpavel.tasktester.Difficulty
 import kotlinx.serialization.Serializable
 import java.time.Instant
 

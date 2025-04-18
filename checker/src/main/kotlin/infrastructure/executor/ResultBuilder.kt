@@ -4,25 +4,25 @@ import com.sushkpavel.domain.model.TestCaseResult
 import com.sushkpavel.domain.model.TestResult
 
 class ResultBuilder(private val maxErrorLength: Int = 254) {
-    fun buildFinalResult(results: List<TestCaseResult>, taskId: Int) = TestResult(
+    fun buildFinalResult(results: List<TestCaseResult>, taskId: Long) = TestResult(
         success = results.all { it.success },
         actualResult = if (results.all { it.success }) "All test passed" else "Fail :(",
         testId = taskId.toString()
     )
 
-    fun compilationError(taskId: Int, e: Exception) = TestResult(
+    fun compilationError(taskId: Long, e: Exception) = TestResult(
         success = false,
         actualResult = "Compilation error: ${e.message?.truncate()}",
         testId = taskId.toString()
     )
 
-    fun testCasesError(taskId: Int, e: Exception) = TestResult(
+    fun testCasesError(taskId: Long, e: Exception) = TestResult(
         success = false,
         actualResult = "Test cases error: ${e.message?.truncate()}",
         testId = taskId.toString()
     )
 
-    fun unexpectedError(e: Exception, taskId: Int) = TestResult(
+    fun unexpectedError(e: Exception, taskId: Long) = TestResult(
         success = false,
         actualResult = "Unexpected error: ${e.message?.truncate()}",
         testId = taskId.toString()

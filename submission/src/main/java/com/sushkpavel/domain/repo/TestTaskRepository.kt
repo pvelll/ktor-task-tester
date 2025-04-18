@@ -8,6 +8,6 @@ import com.sushkpavel.domain.model.TestResult
 interface TestTaskRepository {
     suspend fun testTask(submissionRequest: SubmissionRequest) : TestResultDTO
     suspend fun saveResult(testResultDTO: TestResultDTO, submission: SolutionSubmission)
-    suspend fun getResultsForTask(userId : Int, taskId : Int) : List<TestResult?>
+    suspend fun getResultsForTask(userId : Int, taskId : Long) : List<TestResult?>
     suspend fun getResultForTask(userId : Int, submissionId : Int) : TestResult?
 }

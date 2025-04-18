@@ -13,29 +13,13 @@ import io.ktor.http.contentType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
-import org.jetbrains.exposed.sql.javatime.timestamp
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
+import tables.TestResults
 
 
 class TestTaskRepositoryImpl(private val client: HttpClient, database: Database) : TestTaskRepository {
-    object TestResults : Table() {
-        val id = integer("id").autoIncrement()
-        val userId = integer("user_id")
-        val submissionId = integer("submission_id")
-        val taskId = integer("task_id")
-        val actualResult = varchar("actual_result", 255)
-        val success = bool("success")
-        val createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp)
 
-        override val primaryKey = PrimaryKey(id)
-
-        init {
-            uniqueIndex(id)
-        }
-
-    }
 
     init {
         transaction(database) {
@@ -61,7 +45,7 @@ class TestTaskRepositoryImpl(private val client: HttpClient, database: Database)
         }
     }
 
-    override suspend fun getResultsForTask(userId: Int, taskId: Int): List<TestResult?> = dbQuery {
+    override suspend fun getResultsForTask(userId: Int, taskId: Long): List<TestResult?> = dbQuery {
         TestResults.selectAll().where { (TestResults.userId eq userId) and (TestResults.taskId eq taskId) }
             .mapNotNull { rowToTestResult(it) }
     }

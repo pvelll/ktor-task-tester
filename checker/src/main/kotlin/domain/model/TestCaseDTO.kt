@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TestCaseDTO(
-    val taskId : Int,
+    val taskId : Long,
     val input : String,
     val expOutput : String,
 )

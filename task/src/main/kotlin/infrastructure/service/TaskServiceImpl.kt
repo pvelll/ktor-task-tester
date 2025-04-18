@@ -1,10 +1,10 @@
 package com.sushkpavel.infrastructure.service
 
-import com.sushkpavel.domain.model.Difficulty
 import com.sushkpavel.domain.model.Task
 import com.sushkpavel.domain.repository.TaskRepository
 import com.sushkpavel.domain.service.TaskService
 import com.sushkpavel.infrastructure.dto.TaskDTO
+import com.sushkpavel.tasktester.Difficulty
 
 class TaskServiceImpl(private val taskRepository: TaskRepository) : TaskService {
 

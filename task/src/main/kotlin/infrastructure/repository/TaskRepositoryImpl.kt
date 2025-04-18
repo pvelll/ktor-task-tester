@@ -1,11 +1,10 @@
 package com.sushkpavel.infrastructure.repository
 
-import com.sushkpavel.domain.model.Difficulty
 import com.sushkpavel.domain.model.Task
 import com.sushkpavel.domain.repository.TaskRepository
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.Database
-import com.sushkpavel.domain.repository.TaskRepository.Tasks
+import com.sushkpavel.tasktester.Difficulty
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -15,6 +14,7 @@ import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
+import tables.Tasks
 import java.time.Instant
 
 

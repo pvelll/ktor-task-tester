@@ -43,6 +43,6 @@ class CheckerServiceImpl(
         }
     }
 
-    override suspend fun getTestCases(taskId: Int) = testRepository.getTestCasesByTaskId(taskId)
+    override suspend fun getTestCases(taskId: Long) = testRepository.getTestCasesByTaskId(taskId)
     override suspend fun postTestCases(testCaseDTO: TestCaseDTO) = testRepository.postTestCases(testCaseDTO)
 }

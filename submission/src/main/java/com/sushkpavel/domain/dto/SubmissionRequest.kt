@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SubmissionRequest(
-    val taskId: Int,
+    val taskId: Long,
     val code: String,
     val language: String
 )

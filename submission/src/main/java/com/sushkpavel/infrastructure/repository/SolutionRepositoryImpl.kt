@@ -8,24 +8,10 @@ import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
 import org.jetbrains.exposed.sql.javatime.timestamp
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
+import tables.Submissions
 import java.time.Instant
 
 class SolutionRepositoryImpl(database: Database) : SolutionRepository {
-    object Submissions : Table() {
-        val id = integer("id").autoIncrement()
-        val userId = integer("user_id")
-        val taskId = integer("task_id")
-        val code = text("code")
-        val language = varchar("language", length = 50)
-        val createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp)
-
-        override val primaryKey = PrimaryKey(id)
-
-        init {
-            uniqueIndex(id)
-        }
-
-    }
 
     init {
         transaction(database) {
