@@ -6,6 +6,7 @@ import com.sushkpavel.domain.service.CheckerService
 import com.sushkpavel.infrastructure.executor.ResultBuilder
 import com.sushkpavel.infrastructure.executor.TestRunner
 import com.sushkpavel.infrastructure.executor.error.CompilationException
+import com.sushkpavel.infrastructure.executor.error.ExecutionException
 import com.sushkpavel.infrastructure.executor.factory.LanguageExecutorFactory
 import com.sushkpavel.infrastructure.executor.handleCompilation
 import com.sushkpavel.infrastructure.executor.handleTestCases
@@ -25,14 +26,14 @@ class CheckerServiceImpl(
                 resultBuilder.handleCompilation {
                     executor.compile(subRequest.code)
                 }
-            } catch (e: CompilationException) {
+            } catch (e: ExecutionException) {
                 return resultBuilder.compilationError(subRequest.taskId, e)
             }
             val testCases = try {
                 resultBuilder.handleTestCases {
                     getTestCases(subRequest.taskId)
                 }
-            } catch (e: CompilationException) {
+            } catch (e: ExecutionException) {
                 return resultBuilder.testCasesError(subRequest.taskId, e)
             }
             testRunner.runTests(executor, compilationResult.toString(), testCases!!)

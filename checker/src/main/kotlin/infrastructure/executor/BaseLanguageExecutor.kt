@@ -2,13 +2,17 @@ package com.sushkpavel.infrastructure.executor
 
 import com.sushkpavel.domain.executor.LanguageExecutor
 import com.sushkpavel.domain.model.TestCaseResult
+import com.sushkpavel.infrastructure.executor.error.CompilationException
 import com.sushkpavel.infrastructure.executor.error.ExecutionException
+import io.ktor.util.reflect.instanceOf
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.UUID
+import kotlin.jvm.Throws
+import kotlin.reflect.KClass
 
 abstract class BaseLanguageExecutor : LanguageExecutor {
     protected abstract val languageName: String
@@ -70,6 +74,7 @@ abstract class BaseLanguageExecutor : LanguageExecutor {
         }
     }
 
+    @Throws(ExecutionException::class)
     protected fun runProcess(
         command: List<String>,
         workingDir: Path,
@@ -91,7 +96,7 @@ abstract class BaseLanguageExecutor : LanguageExecutor {
 
         val output = process.inputStream.bufferedReader().readText()
         logger.debug("EXECUTING OUTPUT: $output")
-        val exitCode = process.waitFor()
+        val exitCode : Int = process.waitFor()
 
         if (exitCode != 0) {
             throw ExecutionException(

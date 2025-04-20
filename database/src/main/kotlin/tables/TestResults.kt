@@ -12,7 +12,7 @@ object TestResults : Table() {
         val userId = integer("user_id").references(Users.userId, onDelete = ReferenceOption.CASCADE)
         val submissionId = integer("submission_id").references(Submissions.id, onDelete = ReferenceOption.CASCADE)
         val taskId = long("task_id").references(Tasks.id, onDelete = ReferenceOption.CASCADE) // ✅ Исправлено
-        val actualResult = varchar("actual_result", 255)
+        val actualResult = text("actual_result")
         val success = bool("success")
         val createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp)
 

@@ -2,17 +2,20 @@ package com.sushkpavel.infrastructure.executor
 
 import com.sushkpavel.domain.model.TestCaseResult
 import com.sushkpavel.domain.model.TestResult
+import com.sushkpavel.infrastructure.executor.error.CompilationException
+import com.sushkpavel.infrastructure.executor.error.ExecutionException
+import kotlin.jvm.Throws
 
 class ResultBuilder(private val maxErrorLength: Int = 254) {
     fun buildFinalResult(results: List<TestCaseResult>, taskId: Long) = TestResult(
         success = results.all { it.success },
-        actualResult = if (results.all { it.success }) "All test passed" else "Fail :(",
+        actualResult = if (results.all { it.success }) "All test passed" else "Fail on the tests",
         testId = taskId.toString()
     )
 
-    fun compilationError(taskId: Long, e: Exception) = TestResult(
+    fun compilationError(taskId: Long, e: ExecutionException) = TestResult(
         success = false,
-        actualResult = "Compilation error: ${e.message?.truncate()}",
+        actualResult = "Compilation error: ${e.message.truncate()} , ${e.output}",
         testId = taskId.toString()
     )
 
@@ -31,12 +34,9 @@ class ResultBuilder(private val maxErrorLength: Int = 254) {
     private fun String?.truncate() = this?.take(maxErrorLength) ?: "Unknown error"
 }
 
-inline fun <R> ResultBuilder.handleCompilation(block: () -> R): R? {
-    return try {
-        block()
-    } catch (e: Exception) {
-        null
-    }
+@Throws(CompilationException::class)
+inline fun <R> ResultBuilder.handleCompilation(block: () -> R): R?  {
+    return block()
 }
 
 inline fun <R> ResultBuilder.handleTestCases(block: () -> R): R? {

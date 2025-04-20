@@ -1,3 +1,3 @@
 package com.sushkpavel.infrastructure.executor.error
 
-class CompilationException(message: String) : Exception(message)
+open class CompilationException(message: String) : RuntimeException(message)
