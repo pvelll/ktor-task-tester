@@ -1,7 +1,7 @@
 package com.sushkpavel.domain.repository
 
-import com.sushkpavel.domain.model.Token
-import com.sushkpavel.domain.model.User
+import com.sushkpavel.tasktester.entities.user.Token
+import com.sushkpavel.tasktester.entities.user.User
 
 interface TokenRepository {
     suspend fun addToken(token: Token): Int

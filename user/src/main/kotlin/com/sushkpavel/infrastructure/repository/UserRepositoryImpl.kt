@@ -1,8 +1,8 @@
 package com.sushkpavel.infrastructure.repository
 
-import com.sushkpavel.domain.dto.UserDTO
-import com.sushkpavel.domain.model.Role
-import com.sushkpavel.domain.model.User
+import com.sushkpavel.infrastructure.dto.UserDTO
+import com.sushkpavel.tasktester.entities.user.Role
+import com.sushkpavel.tasktester.entities.user.User
 import com.sushkpavel.domain.repository.UserRepository
 import org.jetbrains.exposed.sql.transactions.transaction
 import com.sushkpavel.tasktester.tables.Users

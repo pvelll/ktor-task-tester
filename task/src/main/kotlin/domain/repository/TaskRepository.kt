@@ -1,7 +1,7 @@
 package com.sushkpavel.domain.repository
 
-import com.sushkpavel.domain.model.Task
-import com.sushkpavel.tasktester.Difficulty
+import com.sushkpavel.tasktester.entities.task.Task
+import com.sushkpavel.tasktester.entities.task.Difficulty
 
 interface TaskRepository {
     suspend fun createTask(task: Task): Task

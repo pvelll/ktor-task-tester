@@ -1,7 +1,6 @@
-package com.sushkpavel.domain.model
+package com.sushkpavel.infrastructure.dto
 
-
-import kotlinx.serialization.Serializable;
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class NotifyMessageDTO(

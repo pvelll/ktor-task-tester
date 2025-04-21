@@ -1,8 +1,8 @@
 package com.sushkpavel.infrastructure.repository
 
 import com.sushkpavel.domain.TestCasesRepository
-import com.sushkpavel.domain.model.TestCase
-import com.sushkpavel.domain.model.TestCaseDTO
+import com.sushkpavel.tasktester.entities.checker.TestCase
+import com.sushkpavel.infrastructure.model.TestCaseDTO
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils

@@ -1,9 +1,9 @@
 package com.sushkpavel.infrastructure.service
 
-import com.sushkpavel.domain.dto.Credentials
-import com.sushkpavel.domain.dto.UserDTO
-import com.sushkpavel.domain.model.Token
-import com.sushkpavel.domain.model.User
+import com.sushkpavel.infrastructure.dto.Credentials
+import com.sushkpavel.infrastructure.dto.UserDTO
+import com.sushkpavel.tasktester.entities.user.Token
+import com.sushkpavel.tasktester.entities.user.User
 import com.sushkpavel.domain.repository.TokenRepository
 import com.sushkpavel.domain.repository.UserRepository
 import com.sushkpavel.domain.service.UserService

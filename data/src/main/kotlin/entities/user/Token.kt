@@ -1,6 +1,6 @@
-package com.sushkpavel.domain.model
+package com.sushkpavel.tasktester.entities.user
 
-import com.sushkpavel.utils.InstantSerializer
+import com.sushkpavel.tasktester.utils.InstantSerializer
 import kotlinx.serialization.Serializable
 import java.time.Instant
 

@@ -1,11 +1,9 @@
 package com.sushkpavel.infrastructure.repository
 
-import com.sushkpavel.domain.model.SolutionSubmission
+import com.sushkpavel.tasktester.entities.submission.SolutionSubmission
 import com.sushkpavel.domain.repo.SolutionRepository
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
-import org.jetbrains.exposed.sql.javatime.timestamp
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import tables.Submissions

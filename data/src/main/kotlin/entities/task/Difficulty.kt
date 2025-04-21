@@ -1,4 +1,4 @@
-package com.sushkpavel.tasktester
+package com.sushkpavel.tasktester.entities.task
 
 import kotlinx.serialization.Serializable
 

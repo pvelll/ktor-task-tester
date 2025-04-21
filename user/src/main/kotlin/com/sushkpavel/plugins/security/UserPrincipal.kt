@@ -1,6 +1,6 @@
 package com.sushkpavel.plugins.security
 
-import com.sushkpavel.domain.model.Role
+import com.sushkpavel.tasktester.entities.user.Role
 import io.ktor.server.auth.*
 
 data class UserPrincipal(

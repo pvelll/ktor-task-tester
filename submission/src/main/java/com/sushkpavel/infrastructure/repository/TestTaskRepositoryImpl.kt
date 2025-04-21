@@ -2,8 +2,8 @@ package com.sushkpavel.infrastructure.repository
 
 import com.sushkpavel.domain.dto.SubmissionRequest
 import com.sushkpavel.domain.dto.TestResultDTO
-import com.sushkpavel.domain.model.SolutionSubmission
-import com.sushkpavel.domain.model.TestResult
+import com.sushkpavel.tasktester.entities.submission.SolutionSubmission
+import com.sushkpavel.tasktester.entities.submission.TestResult
 import com.sushkpavel.domain.repo.TestTaskRepository
 import io.ktor.client.*
 import io.ktor.client.request.*

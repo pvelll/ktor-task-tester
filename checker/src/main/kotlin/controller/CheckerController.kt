@@ -1,7 +1,7 @@
 package com.sushkpavel.controller
 
-import com.sushkpavel.domain.model.SubmissionRequest
-import com.sushkpavel.domain.model.TestCaseDTO
+import com.sushkpavel.infrastructure.model.SubmissionRequest
+import com.sushkpavel.infrastructure.model.TestCaseDTO
 import com.sushkpavel.domain.service.CheckerService
 import io.ktor.server.application.*
 import io.ktor.server.auth.authenticate

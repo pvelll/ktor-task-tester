@@ -1,6 +1,6 @@
-package com.sushkpavel.domain.dto
+package com.sushkpavel.infrastructure.dto
 
-import com.sushkpavel.domain.model.Role
+import com.sushkpavel.tasktester.entities.user.Role
 import kotlinx.serialization.Serializable
 
 @Serializable

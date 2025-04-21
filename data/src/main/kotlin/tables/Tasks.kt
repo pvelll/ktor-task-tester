@@ -1,6 +1,6 @@
 package tables
 
-import com.sushkpavel.tasktester.Difficulty
+import com.sushkpavel.tasktester.entities.task.Difficulty
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.timestamp
 

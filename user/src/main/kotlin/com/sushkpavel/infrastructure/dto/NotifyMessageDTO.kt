@@ -1,4 +1,4 @@
-package com.sushkpavel.domain.dto;
+package com.sushkpavel.infrastructure.dto
 
 
 import kotlinx.serialization.Serializable;

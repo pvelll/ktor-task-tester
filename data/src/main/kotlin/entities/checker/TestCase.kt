@@ -1,7 +1,7 @@
-package com.sushkpavel.domain.model
+package com.sushkpavel.tasktester.entities.checker
 
-import com.sushkpavel.utils.InstantSerializer
 import kotlinx.serialization.Serializable
+import com.sushkpavel.tasktester.utils.InstantSerializer
 import java.time.Instant
 
 @Serializable
@@ -10,5 +10,6 @@ data class TestCase(
     val taskId: Long,
     val input: String,
     val expOutput: String,
-    @Serializable(with = InstantSerializer::class) val createdAt: Instant
+    @Serializable(with = InstantSerializer::class)
+    val createdAt: Instant
 )

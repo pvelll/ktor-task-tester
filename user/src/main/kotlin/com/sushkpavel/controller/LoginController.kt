@@ -1,10 +1,9 @@
 package com.sushkpavel.controller
 
-import com.sun.org.slf4j.internal.LoggerFactory
-import com.sushkpavel.domain.dto.Credentials
-import com.sushkpavel.domain.dto.NotifyMessageDTO
-import com.sushkpavel.domain.dto.UserDTO
-import com.sushkpavel.domain.model.Role
+import com.sushkpavel.infrastructure.dto.Credentials
+import com.sushkpavel.infrastructure.dto.NotifyMessageDTO
+import com.sushkpavel.infrastructure.dto.UserDTO
+import com.sushkpavel.tasktester.entities.user.Role
 import com.sushkpavel.domain.service.UserService
 import com.sushkpavel.utils.getTokenFromHeader
 import io.ktor.http.*

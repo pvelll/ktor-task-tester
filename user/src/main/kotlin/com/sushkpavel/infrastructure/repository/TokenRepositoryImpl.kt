@@ -2,8 +2,8 @@ package com.sushkpavel.infrastructure.repository
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.sushkpavel.domain.model.Token
-import com.sushkpavel.domain.model.User
+import com.sushkpavel.tasktester.entities.user.Token
+import com.sushkpavel.tasktester.entities.user.User
 import com.sushkpavel.domain.repository.TokenRepository
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq

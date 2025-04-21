@@ -2,7 +2,7 @@ package com.sushkpavel.controller
 
 import com.sushkpavel.domain.dto.NotifyMessageDTO
 import com.sushkpavel.domain.dto.SubmissionRequest
-import com.sushkpavel.domain.model.SolutionSubmission
+import com.sushkpavel.tasktester.entities.submission.SolutionSubmission
 import com.sushkpavel.domain.service.SubmissionService
 import io.ktor.http.*
 import io.ktor.server.application.*

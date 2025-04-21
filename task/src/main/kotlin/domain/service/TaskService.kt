@@ -1,8 +1,8 @@
 package com.sushkpavel.domain.service
 
-import com.sushkpavel.domain.model.Task
+import com.sushkpavel.tasktester.entities.task.Task
 import com.sushkpavel.infrastructure.dto.TaskDTO
-import com.sushkpavel.tasktester.Difficulty
+import com.sushkpavel.tasktester.entities.task.Difficulty
 
 
 interface TaskService {

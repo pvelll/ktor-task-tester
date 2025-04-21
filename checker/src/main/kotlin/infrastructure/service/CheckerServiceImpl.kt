@@ -10,6 +10,8 @@ import com.sushkpavel.infrastructure.executor.error.ExecutionException
 import com.sushkpavel.infrastructure.executor.factory.LanguageExecutorFactory
 import com.sushkpavel.infrastructure.executor.handleCompilation
 import com.sushkpavel.infrastructure.executor.handleTestCases
+import com.sushkpavel.infrastructure.model.SubmissionRequest
+import com.sushkpavel.infrastructure.model.TestCaseDTO
 
 class CheckerServiceImpl(
     private val testRepository: TestCasesRepository,

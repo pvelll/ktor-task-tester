@@ -1,10 +1,10 @@
 package com.sushkpavel.infrastructure.repository
 
-import com.sushkpavel.domain.model.Task
+import com.sushkpavel.tasktester.entities.task.Task
 import com.sushkpavel.domain.repository.TaskRepository
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.Database
-import com.sushkpavel.tasktester.Difficulty
+import com.sushkpavel.tasktester.entities.task.Difficulty
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SchemaUtils

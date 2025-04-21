@@ -1,10 +1,10 @@
 package com.sushkpavel.controller
 
-import com.sushkpavel.domain.model.NotifyMessageDTO
-import com.sushkpavel.domain.model.Task
+import com.sushkpavel.infrastructure.dto.NotifyMessageDTO
+import com.sushkpavel.tasktester.entities.task.Task
 import com.sushkpavel.domain.service.TaskService
 import com.sushkpavel.infrastructure.dto.TaskDTO
-import com.sushkpavel.tasktester.Difficulty
+import com.sushkpavel.tasktester.entities.task.Difficulty
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.call

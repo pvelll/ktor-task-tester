@@ -1,7 +1,7 @@
 package com.sushkpavel.infrastructure.executor
 
 import com.sushkpavel.domain.executor.LanguageExecutor
-import com.sushkpavel.domain.model.TestCase
+import com.sushkpavel.tasktester.entities.checker.TestCase
 import com.sushkpavel.domain.model.TestCaseResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException

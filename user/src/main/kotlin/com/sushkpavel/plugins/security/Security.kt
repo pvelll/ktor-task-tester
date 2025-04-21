@@ -2,16 +2,14 @@ package com.sushkpavel.plugins.security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.sun.security.auth.UserPrincipal
-import com.sushkpavel.domain.dto.NotifyMessageDTO
-import com.sushkpavel.domain.model.Role
+import com.sushkpavel.infrastructure.dto.NotifyMessageDTO
+import com.sushkpavel.tasktester.entities.user.Role
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
 import org.koin.ktor.ext.inject
-import java.time.Instant
 
 fun Application.configureSecurity() {
     val jwtConfig: JwtConfig by inject()

@@ -1,10 +1,7 @@
-package com.sushkpavel.domain.model
+package com.sushkpavel.tasktester.entities.task
 
-import com.sushkpavel.tasktester.Difficulty
-import com.sushkpavel.utils.InstantSerializer
 import kotlinx.serialization.Serializable
-import java.time.Instant
-
+import com.sushkpavel.tasktester.utils.InstantSerializer
 @Serializable
 data class Task (
     val id : Long,
@@ -13,7 +10,7 @@ data class Task (
     val difficulty : Difficulty,
     val examples : String,
     @Serializable(with = InstantSerializer::class)
-    val createdAt : Instant,
+    val createdAt : java.time.Instant,
     @Serializable(with = InstantSerializer::class)
-    val updatedAt : Instant,
+    val updatedAt : java.time.Instant,
 )

@@ -1,8 +1,8 @@
 package com.sushkpavel.domain.repository
 
-import com.sushkpavel.domain.dto.UserDTO
-import com.sushkpavel.domain.model.Role
-import com.sushkpavel.domain.model.User
+import com.sushkpavel.infrastructure.dto.UserDTO
+import com.sushkpavel.tasktester.entities.user.Role
+import com.sushkpavel.tasktester.entities.user.User
 
 
 interface UserRepository {

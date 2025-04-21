@@ -2,8 +2,8 @@ package com.sushkpavel.domain.repo
 
 import com.sushkpavel.domain.dto.SubmissionRequest
 import com.sushkpavel.domain.dto.TestResultDTO
-import com.sushkpavel.domain.model.SolutionSubmission
-import com.sushkpavel.domain.model.TestResult
+import com.sushkpavel.tasktester.entities.submission.SolutionSubmission
+import com.sushkpavel.tasktester.entities.submission.TestResult
 
 interface TestTaskRepository {
     suspend fun testTask(submissionRequest: SubmissionRequest) : TestResultDTO
