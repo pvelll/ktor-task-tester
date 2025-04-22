@@ -1,4 +1,4 @@
-package com.sushkpavel.tasktester.entities.user
+package entities.user
 
 enum class Role {
     ADMIN,

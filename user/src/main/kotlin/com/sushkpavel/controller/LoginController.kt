@@ -3,7 +3,7 @@ package com.sushkpavel.controller
 import com.sushkpavel.infrastructure.dto.Credentials
 import com.sushkpavel.infrastructure.dto.NotifyMessageDTO
 import com.sushkpavel.infrastructure.dto.UserDTO
-import com.sushkpavel.tasktester.entities.user.Role
+import entities.user.Role
 import com.sushkpavel.domain.service.UserService
 import com.sushkpavel.utils.getTokenFromHeader
 import io.ktor.http.*

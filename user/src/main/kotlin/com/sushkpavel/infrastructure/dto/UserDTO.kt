@@ -1,6 +1,6 @@
 package com.sushkpavel.infrastructure.dto
 
-import com.sushkpavel.tasktester.entities.user.Role
+import entities.user.Role
 import kotlinx.serialization.Serializable
 
 @Serializable

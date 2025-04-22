@@ -9,9 +9,9 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import com.sushkpavel.plugins.security.UserPrincipal
 import io.ktor.server.auth.*
 import org.koin.ktor.ext.inject
+import security.UserPrincipal
 import java.time.Instant
 
 fun Application.configureSubmissionController() {

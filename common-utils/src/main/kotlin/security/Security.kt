@@ -3,9 +3,8 @@ package security
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.sushkpavel.tasktester.dto.NotifyMessageDTO
-import com.sushkpavel.tasktester.entities.user.Role
+import entities.user.Role
 import com.sushkpavel.tasktester.security.JwtConfig
-import com.sushkpavel.tasktester.security.UserPrincipal
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*

@@ -1,5 +1,6 @@
 package com.sushkpavel.tasktester.entities.user
 
+import entities.user.Role
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import java.time.Instant

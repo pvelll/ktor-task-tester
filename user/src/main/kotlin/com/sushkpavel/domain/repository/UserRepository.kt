@@ -1,7 +1,7 @@
 package com.sushkpavel.domain.repository
 
 import com.sushkpavel.infrastructure.dto.UserDTO
-import com.sushkpavel.tasktester.entities.user.Role
+import entities.user.Role
 import com.sushkpavel.tasktester.entities.user.User
 
 

@@ -1,6 +1,6 @@
-package com.sushkpavel.tasktester.security
+package security
 
-import com.sushkpavel.tasktester.entities.user.Role
+import entities.user.Role
 import io.ktor.server.auth.*
 
 data class UserPrincipal(

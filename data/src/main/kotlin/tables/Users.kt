@@ -1,6 +1,6 @@
 package com.sushkpavel.tasktester.tables
 
-import com.sushkpavel.tasktester.entities.user.Role
+import entities.user.Role
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
 import org.jetbrains.exposed.sql.javatime.timestamp

@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.logback.classic)
     implementation(libs.javax.annotations)
     implementation(project(":data"))
+    implementation(project(":common-utils"))
 }
 
 
