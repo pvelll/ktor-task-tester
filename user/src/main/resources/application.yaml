@@ -4,9 +4,5 @@ ktor:
       - com.sushkpavel.ApplicationKt.module
   deployment:
     port: 8085
-jwt:
-  domain: "https://jwt-provider-domain/"
-  audience: "jwt-audience"
-  realm: "ktor sample app"
-  secret: "super_secret"
+
 

@@ -1,9 +1,11 @@
 package com.sushkpavel
 
-import com.sushkpavel.di.configureKoin
+import com.sushkpavel.di.submissionModule
+import com.sushkpavel.di.testTaskModule
 import com.sushkpavel.plugins.configureRouting
 import com.sushkpavel.plugins.configureSerialization
 import io.ktor.server.application.*
+import koin.configureKoin
 import security.configureSecurity
 
 fun main(args: Array<String>) {
@@ -12,7 +14,7 @@ fun main(args: Array<String>) {
 
 
 fun Application.module() {
-    configureKoin()
+    configureKoin(submissionModule, testTaskModule)
     configureSerialization()
     configureSecurity()
     configureRouting()
