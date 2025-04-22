@@ -1,4 +1,4 @@
-package com.sushkpavel.infrastructure.dto
+package com.sushkpavel.tasktester.dto
 
 import kotlinx.serialization.Serializable
 

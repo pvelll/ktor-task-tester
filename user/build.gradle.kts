@@ -48,6 +48,7 @@ dependencies {
     testImplementation(libs.ktor.server.test.host)
     testImplementation(kotlin("test"))
     implementation(project(":data"))
+    implementation(project(":common-utils"))
 }
 
 tasks.test {

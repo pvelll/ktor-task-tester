@@ -1,6 +1,6 @@
 package com.sushkpavel.controller
 
-import com.sushkpavel.infrastructure.dto.NotifyMessageDTO
+import com.sushkpavel.tasktester.dto.NotifyMessageDTO
 import com.sushkpavel.tasktester.entities.task.Task
 import com.sushkpavel.domain.service.TaskService
 import com.sushkpavel.infrastructure.dto.TaskDTO

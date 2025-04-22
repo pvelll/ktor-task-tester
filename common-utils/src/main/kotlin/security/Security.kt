@@ -1,14 +1,16 @@
-package com.sushkpavel.plugins.security
+package security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.sushkpavel.infrastructure.dto.NotifyMessageDTO
+import com.sushkpavel.tasktester.dto.NotifyMessageDTO
 import com.sushkpavel.tasktester.entities.user.Role
+import com.sushkpavel.tasktester.security.JwtConfig
+import com.sushkpavel.tasktester.security.UserPrincipal
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
-import io.ktor.server.response.*
+import io.ktor.server.response.respond
 import org.koin.ktor.ext.inject
 
 fun Application.configureSecurity() {

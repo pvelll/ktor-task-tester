@@ -1,4 +1,4 @@
-package com.sushkpavel.plugins.security
+package com.sushkpavel.tasktester.security
 
 import com.sushkpavel.tasktester.entities.user.Role
 import io.ktor.server.auth.*

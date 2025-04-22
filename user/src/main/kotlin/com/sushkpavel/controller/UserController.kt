@@ -4,7 +4,7 @@ import com.sushkpavel.infrastructure.dto.NotifyMessageDTO
 import com.sushkpavel.tasktester.entities.user.Role
 import com.sushkpavel.tasktester.entities.user.User
 import com.sushkpavel.domain.service.UserService
-import com.sushkpavel.plugins.security.UserPrincipal
+import com.sushkpavel.tasktester.security.UserPrincipal
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*

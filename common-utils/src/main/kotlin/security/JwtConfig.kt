@@ -1,4 +1,4 @@
-package com.sushkpavel.plugins.security
+package com.sushkpavel.tasktester.security
 
 data class JwtConfig(
     val domain: String,

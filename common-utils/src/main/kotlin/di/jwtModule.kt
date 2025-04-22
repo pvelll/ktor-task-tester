@@ -1,6 +1,6 @@
-package com.sushkpavel.di
+package di
 
-import com.sushkpavel.plugins.security.JwtConfig
+import com.sushkpavel.tasktester.security.JwtConfig
 import org.koin.dsl.module
 
 val jwtModule = module {
