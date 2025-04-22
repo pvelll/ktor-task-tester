@@ -1,6 +1,5 @@
 package com.sushkpavel.di
 
-import com.sushkpavel.domain.TestCasesRepository
 import com.sushkpavel.infrastructure.executor.FileManager
 import com.sushkpavel.infrastructure.executor.ResultBuilder
 import com.sushkpavel.infrastructure.executor.TestRunner

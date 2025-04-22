@@ -1,8 +1,7 @@
-package di
+package security
 
 import com.sushkpavel.tasktester.security.JwtConfig
 import org.koin.dsl.module
-import security.JwtConfigLoader
 
 val jwtConfig = module {
     single {
