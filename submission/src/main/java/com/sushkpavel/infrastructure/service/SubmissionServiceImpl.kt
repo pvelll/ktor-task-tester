@@ -1,6 +1,6 @@
 package com.sushkpavel.infrastructure.service
 
-import com.sushkpavel.domain.dto.SubmissionRequest
+import com.sushkpavel.infrastructure.dto.SubmissionRequest
 import com.sushkpavel.tasktester.entities.submission.SolutionSubmission
 import com.sushkpavel.tasktester.entities.submission.TestResult
 import com.sushkpavel.domain.repo.SolutionRepository
