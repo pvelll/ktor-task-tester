@@ -39,7 +39,9 @@ class CheckerServiceImpl(
                 return resultBuilder.testCasesError(subRequest.taskId, e)
             }
             testRunner.runTests(executor, compilationResult.toString(), testCases!!)
-                .let { resultBuilder.buildFinalResult(it, subRequest.taskId) }
+                .let {
+                    resultBuilder.buildFinalResult(it, subRequest.taskId)
+                }
 
         } catch (e: Exception) {
             resultBuilder.unexpectedError(e, subRequest.taskId)

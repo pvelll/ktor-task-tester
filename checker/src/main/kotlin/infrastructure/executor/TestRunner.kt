@@ -23,7 +23,9 @@ class TestRunner(
     ): List<TestCaseResult> {
         return coroutineScope {
             testCases.map { testCase ->
-                async { runSingleTest(executor, compilationResult, testCase) }
+                async {
+                    runSingleTest(executor, compilationResult, testCase)
+                }
             }.awaitAll()
         }.also {
             fileManager.cleanup(compilationResult)

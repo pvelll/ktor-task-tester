@@ -18,6 +18,7 @@ dependencies {
     implementation(libs.exposed.jdbc)
     implementation(libs.exposed.java.time)
     implementation(libs.mysql.connector.java)
+    implementation(libs.hikari.connection.pool)
     implementation(libs.koin.ktor)
     testImplementation(kotlin("test"))
 }

@@ -58,7 +58,7 @@ abstract class BaseLanguageExecutor : LanguageExecutor {
             val output = runProcess(executeCommand(className, tempDir), tempDir, "execution", input)
             TestCaseResult(
                 testId = testId,
-                success = true,
+                success = output.trim() == expectedOutput.trim(),
                 actualResult = output.trim(),
                 expectedResult = expectedOutput.trim(),
                 error = null

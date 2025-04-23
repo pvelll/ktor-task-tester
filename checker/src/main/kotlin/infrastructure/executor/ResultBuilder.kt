@@ -7,11 +7,22 @@ import com.sushkpavel.infrastructure.executor.error.ExecutionException
 import kotlin.jvm.Throws
 
 class ResultBuilder(private val maxErrorLength: Int = 254) {
-    fun buildFinalResult(results: List<TestCaseResult>, taskId: Long) = TestResult(
-        success = results.all { it.success },
-        actualResult = if (results.all { it.success }) "All test passed" else "Fail on the tests",
-        testId = taskId.toString()
-    )
+    fun buildFinalResult(results: List<TestCaseResult>, taskId: Long): TestResult {
+        val hasResults = results.isNotEmpty()
+        val success = hasResults && results.all { it.success }
+        val actualResult = when {
+            !hasResults -> "No tests were executed"
+            success -> "All tests passed"
+            else -> "Fail on the tests"
+        }
+        println(results)
+        return TestResult(
+            success = success,
+            actualResult = actualResult,
+            testId = taskId.toString()
+        )
+    }
+
 
     fun compilationError(taskId: Long, e: ExecutionException) = TestResult(
         success = false,

@@ -5,6 +5,7 @@ logback-version = "1.4.14"
 koin-version = "3.5.6"
 serialization-version = "1.7.1"
 exposed-version = "0.56.0"
+hikari-version = "6.3.0"
 
 
 [libraries]
@@ -34,6 +35,7 @@ exposed-jdbc = {module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "ex
 exposed-java-time = {module ="org.jetbrains.exposed:exposed-java-time", version.ref="exposed-version"}
 mysql-connector-java = {module = "mysql:mysql-connector-java", version = "8.0.33"}
 kotlinx-datetime = {module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.6.0"}
+hikari-connection-pool = {module = "com.zaxxer:HikariCP", version.ref = "hikari-version"}
 
 
 [plugins]
