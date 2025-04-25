@@ -1,10 +1,8 @@
 package com.sushkpavel.infrastructure.executor
 
-import com.sushkpavel.domain.executor.LanguageExecutor
+import com.sushkpavel.domain.executor.CodeExecutor
 import com.sushkpavel.domain.model.TestCaseResult
-import com.sushkpavel.infrastructure.executor.error.CompilationException
 import com.sushkpavel.infrastructure.executor.error.ExecutionException
-import io.ktor.util.reflect.instanceOf
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.nio.file.Files
@@ -12,9 +10,8 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.UUID
 import kotlin.jvm.Throws
-import kotlin.reflect.KClass
 
-abstract class BaseLanguageExecutor : LanguageExecutor {
+abstract class BaseTaskExecutor : CodeExecutor {
     protected abstract val languageName: String
     protected abstract val sourceExtension: String
     protected abstract val compileCommand: (String, Path) -> List<String>
@@ -31,7 +28,6 @@ abstract class BaseLanguageExecutor : LanguageExecutor {
         val tempDir = Files.createTempDirectory("${languageName}_executor").apply {
             toFile().deleteOnExit()
         }
-
         val sourceFilePath = tempDir.resolve(sourceFileName)
         val processedCode = preprocessCode(code, className)
 

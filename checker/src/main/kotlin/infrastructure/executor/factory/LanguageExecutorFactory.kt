@@ -1,6 +1,6 @@
 package com.sushkpavel.infrastructure.executor.factory
 
-import com.sushkpavel.domain.executor.LanguageExecutor
+import com.sushkpavel.domain.executor.CodeExecutor
 import com.sushkpavel.infrastructure.executor.impl.CppExecutor
 import com.sushkpavel.infrastructure.executor.impl.JavaExecutor
 import com.sushkpavel.infrastructure.executor.impl.KotlinExecutor
@@ -14,7 +14,7 @@ class LanguageExecutorFactory {
         Languages.PYTHON.lang to ::PythonExecutor
     )
 
-    fun build(language: String): LanguageExecutor {
+    fun build(language: String): CodeExecutor {
         return executors[language]?.invoke() ?: throw IllegalArgumentException("Unsupported language: $language")
     }
 }

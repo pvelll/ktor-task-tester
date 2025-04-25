@@ -1,9 +1,9 @@
 package com.sushkpavel.infrastructure.executor.impl
 
-import com.sushkpavel.infrastructure.executor.BaseLanguageExecutor
+import com.sushkpavel.infrastructure.executor.BaseTaskExecutor
 import java.nio.file.Path
 
-class KotlinExecutor : BaseLanguageExecutor() {
+class KotlinExecutor : BaseTaskExecutor() {
     override val languageName = "kotlin"
     override val sourceExtension = "kt"
     override val needCompilation = true

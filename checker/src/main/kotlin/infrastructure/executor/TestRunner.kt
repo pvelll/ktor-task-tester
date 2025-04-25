@@ -1,6 +1,6 @@
 package com.sushkpavel.infrastructure.executor
 
-import com.sushkpavel.domain.executor.LanguageExecutor
+import com.sushkpavel.domain.executor.CodeExecutor
 import com.sushkpavel.tasktester.entities.checker.TestCase
 import com.sushkpavel.domain.model.TestCaseResult
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +17,7 @@ class TestRunner(
     private val fileManager: FileManager
 ) {
     suspend fun runTests(
-        executor: LanguageExecutor,
+        executor: CodeExecutor,
         compilationResult: String,
         testCases: List<TestCase>
     ): List<TestCaseResult> {
@@ -33,7 +33,7 @@ class TestRunner(
     }
 
     private suspend fun runSingleTest(
-        executor: LanguageExecutor,
+        executor: CodeExecutor,
         compilationResult: String,
         testCase: TestCase
     ): TestCaseResult {
