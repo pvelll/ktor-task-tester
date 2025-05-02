@@ -1,4 +1,4 @@
-package security
+package security.jwt
 
 import com.sushkpavel.tasktester.security.JwtConfig
 import org.koin.dsl.module

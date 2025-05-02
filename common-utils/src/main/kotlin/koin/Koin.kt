@@ -1,7 +1,7 @@
 package koin
 
 import dataBaseModule
-import security.jwtConfig
+import security.jwt.jwtConfig
 import io.ktor.server.application.Application
 import org.koin.core.context.GlobalContext.startKoin
 

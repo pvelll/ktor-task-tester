@@ -1,7 +1,7 @@
-package security
+package security.jwt
 
 import entities.user.Role
-import io.ktor.server.auth.*
+import io.ktor.server.auth.Principal
 
 data class UserPrincipal(
     val userId: Int,

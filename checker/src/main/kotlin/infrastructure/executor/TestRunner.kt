@@ -23,10 +23,8 @@ class TestRunner(
     ): List<TestCaseResult> {
         return coroutineScope {
             testCases.map { testCase ->
-                async {
                     runSingleTest(executor, compilationResult, testCase)
                 }
-            }.awaitAll()
         }.also {
             fileManager.cleanup(compilationResult)
         }
@@ -48,6 +46,7 @@ class TestRunner(
                     )
                 }
             } catch (e: TimeoutCancellationException) {
+                println("achtung! timeout!!!")
                 TestCaseResult.timeout(testCase.id.toString(), testCase.expOutput, timeout.seconds)
             } catch (e: Exception) {
                 TestCaseResult.exception(testCase.id.toString(), testCase.expOutput, e)

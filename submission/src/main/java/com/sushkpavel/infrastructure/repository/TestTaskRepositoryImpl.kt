@@ -6,6 +6,7 @@ import com.sushkpavel.tasktester.entities.submission.SolutionSubmission
 import com.sushkpavel.tasktester.entities.submission.TestResult
 import com.sushkpavel.domain.repo.TestTaskRepository
 import io.ktor.client.*
+import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.ContentType
@@ -28,11 +29,19 @@ class TestTaskRepositoryImpl(private val client: HttpClient, database: Database)
     }
 
     override suspend fun testTask(submissionRequest: SubmissionRequest): TestResultDTO {
-        val response = client.post("http://checker-service:8084/check-solution") {
-            contentType(ContentType.Application.Json)
-            setBody(submissionRequest)
-        }.bodyAsText()
-        return Json.decodeFromString<TestResultDTO>(response)
+        try {
+            val response = client.post("http://checker-service:8084/check-solution") {
+                contentType(ContentType.Application.Json)
+                setBody(submissionRequest)
+            }.bodyAsText()
+            return Json.decodeFromString<TestResultDTO>(response)
+        } catch (e: HttpRequestTimeoutException) {
+            return TestResultDTO(
+                testId = submissionRequest.taskId.toInt(),
+                actualResult = "Execution timeout",
+                success = false
+            )
+        }
     }
 
     override suspend fun saveResult(testResultDTO: TestResultDTO, submission: SolutionSubmission): Unit = dbQuery {

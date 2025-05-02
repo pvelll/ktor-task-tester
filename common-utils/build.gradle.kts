@@ -29,6 +29,7 @@ dependencies {
     implementation(libs.koin.logger.slf4j)
     implementation(libs.ktor.server.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.network.tls.certificates)
     implementation(libs.mysql.connector.java)
     implementation(libs.ktor.server.netty)
     implementation(libs.logback.classic)

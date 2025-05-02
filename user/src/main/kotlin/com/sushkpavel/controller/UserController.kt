@@ -4,7 +4,7 @@ import com.sushkpavel.infrastructure.dto.NotifyMessageDTO
 import entities.user.Role
 import com.sushkpavel.tasktester.entities.user.User
 import com.sushkpavel.domain.service.UserService
-import security.UserPrincipal
+import security.jwt.UserPrincipal
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -20,7 +20,7 @@ fun Application.configureUserController() {
 
     routing {
         authenticate {
-            get("/users/{id}") {
+            get("/user/{id}") {
                 val principal = call.principal<UserPrincipal>() ?: throw AuthenticationException()
                 val id = call.parameters["id"]?.toIntOrNull() ?: throw IllegalArgumentException(INVALID_ID)
 
@@ -48,7 +48,7 @@ fun Application.configureUserController() {
                 }
             }
 
-            put("/users/{id}") {
+            put("/user/{id}") {
                 val principal = call.principal<UserPrincipal>() ?: throw AuthenticationException()
                 val id = call.parameters["id"]?.toIntOrNull() ?: throw IllegalArgumentException(INVALID_ID)
 
@@ -73,7 +73,7 @@ fun Application.configureUserController() {
                 }
             }
 
-            delete("/users/{id}") {
+            delete("/user/{id}") {
                 val principal = call.principal<UserPrincipal>() ?: throw AuthenticationException()
                 val id = call.parameters["id"]?.toIntOrNull() ?: throw IllegalArgumentException(INVALID_ID)
 

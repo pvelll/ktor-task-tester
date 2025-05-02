@@ -11,6 +11,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.respond
 import org.koin.ktor.ext.inject
+import security.jwt.UserPrincipal
 
 fun Application.configureSecurity() {
     val jwtConfig: JwtConfig by inject()

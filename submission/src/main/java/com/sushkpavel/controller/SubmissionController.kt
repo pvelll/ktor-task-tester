@@ -11,7 +11,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.auth.*
 import org.koin.ktor.ext.inject
-import security.UserPrincipal
+import security.jwt.UserPrincipal
 import java.time.Instant
 
 fun Application.configureSubmissionController() {
