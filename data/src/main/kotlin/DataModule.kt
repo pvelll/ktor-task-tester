@@ -9,7 +9,7 @@ val dataBaseModule = module {
         driverClassName = "com.mysql.cj.jdbc.Driver"
         username = "service"
         password = "3277122228"
-        maximumPoolSize = 10
+        maximumPoolSize = 20
         isAutoCommit = false
         transactionIsolation = "TRANSACTION_REPEATABLE_READ"
     } }

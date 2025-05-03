@@ -9,6 +9,7 @@ services:
       MYSQL_USER: service
       MYSQL_PASSWORD: 3277122228
       MYSQL_BIND_ADDRESS: 0.0.0.0
+      MYSQL_MAX_CONNECTIONS: 500
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
