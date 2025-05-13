@@ -6,8 +6,7 @@ import com.sushkpavel.domain.model.TestCaseResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.time.withTimeout
 import kotlinx.coroutines.withContext
 import java.time.Duration
@@ -21,10 +20,12 @@ class TestRunner(
         compilationResult: String,
         testCases: List<TestCase>
     ): List<TestCaseResult> {
-        return coroutineScope {
+        return supervisorScope {
             testCases.map { testCase ->
+                async {
                     runSingleTest(executor, compilationResult, testCase)
-                }
+                }.await()
+            }
         }.also {
             fileManager.cleanup(compilationResult)
         }

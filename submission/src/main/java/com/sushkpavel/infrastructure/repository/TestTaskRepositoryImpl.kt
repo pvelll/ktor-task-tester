@@ -21,7 +21,6 @@ import tables.TestResults
 
 class TestTaskRepositoryImpl(private val client: HttpClient, database: Database) : TestTaskRepository {
 
-
     init {
         transaction(database) {
             SchemaUtils.create(TestResults)

@@ -33,7 +33,6 @@ fun Application.configureLoginController() {
                         NotifyMessageDTO(message = "Created", code = HttpStatusCode.Created.value)
                     )
                 }
-
                 else -> {
                     call.respond(
                         HttpStatusCode.BadRequest,
