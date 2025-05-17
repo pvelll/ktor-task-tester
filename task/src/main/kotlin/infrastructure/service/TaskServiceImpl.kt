@@ -26,7 +26,7 @@ class TaskServiceImpl(private val taskRepository: TaskRepository) : TaskService 
         return taskRepository.getTask(taskId)
     }
 
-    override suspend fun getTask(difficulty: Difficulty): Task? {
-        return taskRepository.getTask(difficulty)
+    override suspend fun getTask(difficulty: Difficulty, currentTask : Long): Task? {
+        return taskRepository.getTask(difficulty, currentTask)
     }
 }

@@ -8,6 +8,6 @@ interface TaskRepository {
     suspend fun deleteTask(taskId: Long): Boolean
     suspend fun updateTask(task: Task): Task
     suspend fun getTask(taskId: Long): Task?
-    suspend fun getTask(difficulty: Difficulty): Task?
+    suspend fun getTask(difficulty: Difficulty, currentTask : Long): Task?
 
 }

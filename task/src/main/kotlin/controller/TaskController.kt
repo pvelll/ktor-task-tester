@@ -27,11 +27,12 @@ fun Application.configureTaskController() {
         get {
             val taskId = call.parameters["taskId"]?.toLongOrNull()
             val difficultyStr = call.parameters["difficulty"]?.uppercase()
+            val currentTask = call.parameters["current"]?.toLongOrNull()
             val task = when {
                 taskId != null -> taskService.getTask(taskId)
-                difficultyStr != null -> {
+                difficultyStr != null && currentTask != null -> {
                     try {
-                        taskService.getTask(Difficulty.valueOf(difficultyStr))
+                        taskService.getTask(Difficulty.valueOf(difficultyStr), currentTask)
                     } catch (e: IllegalArgumentException) {
                         call.respond(
                             HttpStatusCode.BadRequest,
