@@ -1,7 +1,7 @@
 package com.sushkpavel.domain.service
 
-import com.sushkpavel.domain.model.SolutionSubmission
-import com.sushkpavel.domain.model.TestResult
+import com.sushkpavel.tasktester.entities.submission.SolutionSubmission
+import com.sushkpavel.tasktester.entities.submission.TestResult
 
 interface SubmissionService {
     suspend fun saveSubmission(submission: SolutionSubmission) : Int

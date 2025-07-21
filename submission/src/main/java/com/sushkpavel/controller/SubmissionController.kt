@@ -1,17 +1,17 @@
 package com.sushkpavel.controller
 
-import com.sushkpavel.domain.dto.NotifyMessageDTO
-import com.sushkpavel.domain.dto.SubmissionRequest
-import com.sushkpavel.domain.model.SolutionSubmission
+import com.sushkpavel.infrastructure.dto.SubmissionRequest
+import com.sushkpavel.tasktester.entities.submission.SolutionSubmission
 import com.sushkpavel.domain.service.SubmissionService
+import com.sushkpavel.tasktester.dto.NotifyMessageDTO
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import com.sushkpavel.plugins.security.UserPrincipal
 import io.ktor.server.auth.*
 import org.koin.ktor.ext.inject
+import security.jwt.UserPrincipal
 import java.time.Instant
 
 fun Application.configureSubmissionController() {

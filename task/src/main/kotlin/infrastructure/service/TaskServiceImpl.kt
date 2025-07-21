@@ -1,10 +1,10 @@
 package com.sushkpavel.infrastructure.service
 
-import com.sushkpavel.domain.model.Difficulty
-import com.sushkpavel.domain.model.Task
+import com.sushkpavel.tasktester.entities.task.Task
 import com.sushkpavel.domain.repository.TaskRepository
 import com.sushkpavel.domain.service.TaskService
 import com.sushkpavel.infrastructure.dto.TaskDTO
+import com.sushkpavel.tasktester.entities.task.Difficulty
 
 class TaskServiceImpl(private val taskRepository: TaskRepository) : TaskService {
 
@@ -26,7 +26,7 @@ class TaskServiceImpl(private val taskRepository: TaskRepository) : TaskService 
         return taskRepository.getTask(taskId)
     }
 
-    override suspend fun getTask(difficulty: Difficulty): Task? {
-        return taskRepository.getTask(difficulty)
+    override suspend fun getTask(difficulty: Difficulty, currentTask : Long): Task? {
+        return taskRepository.getTask(difficulty, currentTask)
     }
 }

@@ -1,20 +1,21 @@
 package com.sushkpavel.infrastructure.repository
 
-import com.sushkpavel.domain.model.Difficulty
-import com.sushkpavel.domain.model.Task
+import com.sushkpavel.tasktester.entities.task.Task
 import com.sushkpavel.domain.repository.TaskRepository
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.Database
-import com.sushkpavel.domain.repository.TaskRepository.Tasks
+import com.sushkpavel.tasktester.entities.task.Difficulty
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
+import tables.Tasks
 import java.time.Instant
 
 
@@ -67,20 +68,37 @@ class TaskRepositoryImpl(database: Database) : TaskRepository {
         Tasks.selectAll().where { Tasks.id eq taskId }.map { rowToTask(it) }.singleOrNull()
     }
 
-    override suspend fun getTask(difficulty: Difficulty): Task? = dbQuery {
-        val taskCount = Tasks.selectAll()
-            .where { Tasks.difficulty eq difficulty }
-            .count()
-        if (taskCount == 0L) {
+    override suspend fun getTask(difficulty: Difficulty, currentTask: Long): Task? = dbQuery {
+        val tasks = Tasks.selectAll()
+            .where { (Tasks.difficulty eq difficulty) and (Tasks.id neq currentTask)}
+//            .where {  }
+            .map { rowToTask(it) }
+
+        if (tasks.isEmpty()) {
             return@dbQuery null
         }
-        val randomOffset = (0 until taskCount).random()
-        Tasks.selectAll()
-            .where { Tasks.difficulty eq difficulty }
-            .limit(1).offset(randomOffset)
-            .map { rowToTask(it) }
-            .singleOrNull()
+
+        val randomTask = tasks.random()
+        return@dbQuery randomTask
     }
+
+
+//    override suspend fun getTask(difficulty: Difficulty, currentTask : Long): Task? = dbQuery {
+//        val taskCount = Tasks.selectAll()
+//            .where { Tasks.difficulty eq difficulty }
+//            .where { Tasks.id neq currentTask }
+//            .count()
+//        if (taskCount == 0L) {
+//            return@dbQuery null
+//        }
+//        val randomOffset = (0 until taskCount).random()
+//        Tasks.selectAll()
+//            .where { Tasks.difficulty eq difficulty }
+//            .where { Tasks.id neq currentTask }
+//            .limit(1).offset(randomOffset)
+//            .map { rowToTask(it) }
+//            .singleOrNull()
+//    }
 
     private fun rowToTask(row: ResultRow): Task {
         return Task(

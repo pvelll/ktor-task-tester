@@ -1,12 +1,12 @@
 package com.sushkpavel
 
-import com.sushkpavel.di.configureKoin
-import com.sushkpavel.plugins.configureRouting
-import com.sushkpavel.plugins.configureSerialization
-import com.sushkpavel.plugins.security.configureSecurity
-import io.ktor.serialization.kotlinx.json.json
+import com.sushkpavel.controller.configureSubmissionController
+import com.sushkpavel.di.submissionModule
+import com.sushkpavel.di.testTaskModule
 import io.ktor.server.application.*
-import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import koin.configureKoin
+import security.configureSecurity
+import serialization.configureSerialization
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
@@ -14,8 +14,8 @@ fun main(args: Array<String>) {
 
 
 fun Application.module() {
-    configureKoin()
+    configureKoin(submissionModule, testTaskModule)
     configureSerialization()
     configureSecurity()
-    configureRouting()
+    configureSubmissionController()
 }

@@ -2,19 +2,19 @@ package com.sushkpavel.infrastructure.repository
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.sushkpavel.domain.model.Token
-import com.sushkpavel.domain.model.User
+import com.sushkpavel.tasktester.entities.user.Token
+import com.sushkpavel.tasktester.entities.user.User
 import com.sushkpavel.domain.repository.TokenRepository
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.time.Instant
 import java.time.temporal.ChronoUnit
-import com.sushkpavel.domain.repository.TokenRepository.Tokens
-import com.sushkpavel.plugins.security.JwtConfig
+import com.sushkpavel.tasktester.security.JwtConfig
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.koin.java.KoinJavaComponent.inject
+import tables.Tokens
 import java.util.*
 
 class TokenRepositoryImpl(database: Database) : TokenRepository {
@@ -23,7 +23,6 @@ class TokenRepositoryImpl(database: Database) : TokenRepository {
             SchemaUtils.create(Tokens)
         }
     }
-
 
     override suspend fun addToken(token: Token): Int = dbQuery {
         Tokens.insert {

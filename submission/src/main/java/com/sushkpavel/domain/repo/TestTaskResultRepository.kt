@@ -1,6 +1,6 @@
 package com.sushkpavel.domain.repo
 
-import com.sushkpavel.domain.model.TestResult
+import com.sushkpavel.tasktester.entities.submission.TestResult
 
 interface TestTaskResultRepository {
     suspend fun saveTestResult(testResult: TestResult)

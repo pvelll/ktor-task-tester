@@ -1,13 +1,12 @@
 package com.sushkpavel.infrastructure.executor
 
-import com.sushkpavel.domain.executor.LanguageExecutor
-import com.sushkpavel.domain.model.TestCase
+import com.sushkpavel.domain.executor.CodeExecutor
+import com.sushkpavel.tasktester.entities.checker.TestCase
 import com.sushkpavel.domain.model.TestCaseResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.time.withTimeout
 import kotlinx.coroutines.withContext
 import java.time.Duration
@@ -17,21 +16,23 @@ class TestRunner(
     private val fileManager: FileManager
 ) {
     suspend fun runTests(
-        executor: LanguageExecutor,
+        executor: CodeExecutor,
         compilationResult: String,
         testCases: List<TestCase>
     ): List<TestCaseResult> {
-        return coroutineScope {
+        return supervisorScope {
             testCases.map { testCase ->
-                async { runSingleTest(executor, compilationResult, testCase) }
-            }.awaitAll()
+                async {
+                    runSingleTest(executor, compilationResult, testCase)
+                }.await()
+            }
         }.also {
             fileManager.cleanup(compilationResult)
         }
     }
 
     private suspend fun runSingleTest(
-        executor: LanguageExecutor,
+        executor: CodeExecutor,
         compilationResult: String,
         testCase: TestCase
     ): TestCaseResult {
@@ -46,6 +47,7 @@ class TestRunner(
                     )
                 }
             } catch (e: TimeoutCancellationException) {
+                println("achtung! timeout!!!")
                 TestCaseResult.timeout(testCase.id.toString(), testCase.expOutput, timeout.seconds)
             } catch (e: Exception) {
                 TestCaseResult.exception(testCase.id.toString(), testCase.expOutput, e)

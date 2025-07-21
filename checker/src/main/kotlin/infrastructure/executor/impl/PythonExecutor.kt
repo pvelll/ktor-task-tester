@@ -1,11 +1,11 @@
 package com.sushkpavel.infrastructure.executor.impl
 
-import com.sushkpavel.infrastructure.executor.BaseLanguageExecutor
+import com.sushkpavel.infrastructure.executor.BaseTaskExecutor
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.*
 
-class PythonExecutor : BaseLanguageExecutor() {
+class PythonExecutor : BaseTaskExecutor() {
     override val languageName = "python"
     override val sourceExtension = "py"
     override val needCompilation = false

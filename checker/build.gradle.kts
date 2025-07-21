@@ -38,6 +38,8 @@ dependencies {
     implementation(libs.kotlinx.serialization)
     implementation(libs.logback.classic)
     implementation(libs.javax.annotations)
+    implementation(project(":data"))
+    implementation(project(":common-utils"))
 }
 
 application {

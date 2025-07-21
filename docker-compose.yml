@@ -9,20 +9,18 @@ services:
       MYSQL_USER: service
       MYSQL_PASSWORD: 3277122228
       MYSQL_BIND_ADDRESS: 0.0.0.0
-    ports:
-      - "3306:3306"
+      MYSQL_MAX_CONNECTIONS: 500
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
-      app-network:
-        ipv4_address: 172.20.0.2
+      - app-network
 
   api-service:
     build:
       context: ./api
       dockerfile: Dockerfile
-    ports:
-      - "8082:8082"
+    expose:
+      - "8082"
     volumes:
       - shared-data:/app/shared
     healthcheck:
@@ -31,65 +29,74 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      app-network:
-        ipv4_address: 172.20.0.3
+      - app-network
 
   submission-service:
     build:
       context: ./submission
       dockerfile: Dockerfile
-    ports:
-      - "8083:8083"
+    expose:
+      - "8083"
     volumes:
       - shared-data:/app/shared
     networks:
-      app-network:
-        ipv4_address: 172.20.0.4
+      - app-network
 
   checker-service:
     build:
       context: ./checker
       dockerfile: Dockerfile
     restart: always
-    ports:
-      - "8084:8084"
+    expose:
+      - "8084"
     volumes:
       - shared-data:/app/shared
     networks:
-      app-network:
-        ipv4_address: 172.20.0.5
+      - app-network
 
   user-service:
     build:
       context: ./user
       dockerfile: Dockerfile
-    ports:
-      - "8085:8085"
+    expose:
+      - "8085"
     volumes:
       - shared-data:/app/shared
     networks:
-      app-network:
-        ipv4_address: 172.20.0.6
+      - app-network
 
   task-service:
     build:
       context: ./task
       dockerfile: Dockerfile
-    ports:
-      - "8086:8086"
+    expose:
+      - "8086"
     volumes:
       - shared-data:/app/shared
     networks:
-      app-network:
-        ipv4_address: 172.20.0.7
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - api-service
+      - submission-service
+      - checker-service
+      - user-service
+      - task-service
+    networks:
+      - app-network
 
 networks:
   app-network:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/16
-          gateway: 172.20.0.1
 
 volumes:
   shared-data:

@@ -1,6 +1,6 @@
 package com.sushkpavel.domain.repo
 
-import com.sushkpavel.domain.model.SolutionSubmission
+import com.sushkpavel.tasktester.entities.submission.SolutionSubmission
 
 interface SolutionRepository {
     suspend fun saveSubmission(submission: SolutionSubmission) : Int

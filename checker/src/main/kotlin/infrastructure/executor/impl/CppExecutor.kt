@@ -1,9 +1,9 @@
 package com.sushkpavel.infrastructure.executor.impl
 
-import com.sushkpavel.infrastructure.executor.BaseLanguageExecutor
+import com.sushkpavel.infrastructure.executor.BaseTaskExecutor
 import java.nio.file.Path
 
-class CppExecutor : BaseLanguageExecutor() {
+class CppExecutor : BaseTaskExecutor() {
     override val languageName = "cpp"
     override val sourceExtension = "cpp"
     override val needCompilation = true

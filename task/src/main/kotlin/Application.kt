@@ -2,11 +2,13 @@ package com.sushkpavel
 
 
 import com.sushkpavel.controller.configureTaskController
-import com.sushkpavel.di.configureKoin
-import com.sushkpavel.plugins.configureSerialization
-import com.sushkpavel.plugins.security.configureSecurity
+import com.sushkpavel.di.repositoryModule
+import com.sushkpavel.di.serviceModule
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
+import koin.configureKoin
+import security.configureSecurity
+import serialization.configureSerialization
 
 fun main(args: Array<String>) {
     EngineMain.main(args)
@@ -14,7 +16,7 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     configureSerialization()
-    configureKoin()
+    configureKoin(repositoryModule, serviceModule)
     configureSecurity()
     configureTaskController()
 }

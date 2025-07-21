@@ -1,11 +1,11 @@
 package com.sushkpavel.infrastructure.repository
 
-import com.sushkpavel.domain.dto.UserDTO
-import com.sushkpavel.domain.model.Role
-import com.sushkpavel.domain.model.User
+import com.sushkpavel.infrastructure.dto.UserDTO
+import entities.user.Role
+import com.sushkpavel.tasktester.entities.user.User
 import com.sushkpavel.domain.repository.UserRepository
 import org.jetbrains.exposed.sql.transactions.transaction
-import com.sushkpavel.domain.repository.UserRepository.Users
+import com.sushkpavel.tasktester.tables.Users
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*

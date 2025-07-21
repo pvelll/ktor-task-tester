@@ -1,10 +1,9 @@
 package com.sushkpavel.controller
 
-import com.sun.org.slf4j.internal.LoggerFactory
-import com.sushkpavel.domain.dto.Credentials
-import com.sushkpavel.domain.dto.NotifyMessageDTO
-import com.sushkpavel.domain.dto.UserDTO
-import com.sushkpavel.domain.model.Role
+import com.sushkpavel.infrastructure.dto.Credentials
+import com.sushkpavel.infrastructure.dto.NotifyMessageDTO
+import com.sushkpavel.infrastructure.dto.UserDTO
+import entities.user.Role
 import com.sushkpavel.domain.service.UserService
 import com.sushkpavel.utils.getTokenFromHeader
 import io.ktor.http.*
@@ -23,15 +22,25 @@ fun Application.configureLoginController() {
             val user = call.receive<UserDTO>()
             val adminKey = call.request.headers["X-admin-key"]
             val isAdminRegistration = adminKey == "hardcodeAdminKey"
-            if(user.role == Role.ADMIN && !isAdminRegistration) {
+            if (user.role == Role.ADMIN && !isAdminRegistration) {
                 call.respond("FUCK YOU")
                 return@post
             }
-            val response = userService.register(user)?.let { _ ->
-                NotifyMessageDTO(message = "Created", code = HttpStatusCode.Created.value)
-            } ?: NotifyMessageDTO(message = "Unable to register", code = HttpStatusCode.BadRequest.value)
+            when (userService.register(user)) {
+                HttpStatusCode.Created.value -> {
+                    call.respond(
+                        HttpStatusCode.Created,
+                        NotifyMessageDTO(message = "Created", code = HttpStatusCode.Created.value)
+                    )
+                }
+                else -> {
+                    call.respond(
+                        HttpStatusCode.BadRequest,
+                        NotifyMessageDTO(message = "Unable to register", code = HttpStatusCode.BadRequest.value)
+                    )
+                }
 
-            call.respond(response)
+            }
         }
 
         post("/login") {
@@ -53,7 +62,7 @@ fun Application.configureLoginController() {
             post("/logout") {
                 val token = getTokenFromHeader(call)
                 if (token != null && userService.logout(token)) {
-                    call.respond(NotifyMessageDTO(message = "Logged out successfully", code = HttpStatusCode.OK.value))
+                    call.respond(HttpStatusCode.OK,NotifyMessageDTO(message = "Logged out successfully", code = HttpStatusCode.OK.value))
                 } else {
                     call.respond(
                         HttpStatusCode.Unauthorized,
